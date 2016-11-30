@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    Eagle = require('../index.js'),
+    Eagle = require('../index'),
 
     $ = Eagle.plugins;
 

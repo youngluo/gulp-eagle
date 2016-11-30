@@ -24,18 +24,6 @@ var Task = function (name, description) {
 };
 
 /**
- * Fetch the task(s) with the given name.
- *
- * @param  {string} name
- * @return {Task}
- */
-Task.find = function (name) {
-    return _.find(Eagle.tasks, function (task) {
-        return task.name = name;
-    });
-};
-
-/**
  * Set the task to be called, when firing `Gulp`.
  *
  * @return {Task}
@@ -58,7 +46,7 @@ Task.prototype.watch = function (regex, category) {
         this.watchers.push(regex);
     }
 
-    this.category = category || 'default';
+    //this.category = category || 'default';
 
     return this;
 };

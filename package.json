@@ -23,6 +23,7 @@
   "homepage": "https://github.com/youngluo/gulp-angular-spa#readme",
   "dependencies": {
     "gulp-angular-templatecache": "^2.0.0",
+    "gulp-batch": "^1.0.5",
     "gulp-if": "^2.0.2",
     "gulp-load-plugins": "^1.4.0",
     "gulp-notify": "^2.2.0",
