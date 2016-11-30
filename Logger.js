@@ -1,11 +1,8 @@
-var fs = require('fs');
-var path = require('path');
-var gutil = require('gulp-util');
+var fs = require('fs'),
+    path = require('path'),
+    gutil = require('gulp-util');
 
-/**
- * Create a new Logger constructor.
- */
-var Logger = function() {};
+var Logger = function () {};
 
 /**
  * Log a heading to the console.
@@ -13,7 +10,7 @@ var Logger = function() {};
  * @param  {string} heading
  * @return {Logger}
  */
-Logger.heading = function(heading) {
+Logger.heading = function (heading) {
     console.log(''); // line break
 
     console.log(
@@ -29,7 +26,7 @@ Logger.heading = function(heading) {
  * @param  {string} message
  * @return {Logger}
  */
-Logger.message = function(message) {
+Logger.message = function (message) {
     console.log(message);
 
     return Logger;
@@ -42,12 +39,12 @@ Logger.message = function(message) {
  * @param  {boolean}      checkForFiles
  * @return {Logger}
  */
-Logger.files = function(files, checkForFiles) {
+Logger.files = function (files, checkForFiles) {
     files = Array.isArray(files) ? files : [files];
     var spacer = '   - ';
 
-    files.forEach(function(file) {
-        if ( ! checkForFiles || assertFileExists(file)) {
+    files.forEach(function (file) {
+        if (!checkForFiles || assertFileExists(file)) {
             console.log(spacer + file);
         } else {
             console.log(spacer + gutil.colors.bgRed(file) + ' <-- Not Found');
@@ -65,7 +62,7 @@ Logger.files = function(files, checkForFiles) {
  * @param  {string} file
  * @return {boolean}
  */
-var assertFileExists = function(file) {
+var assertFileExists = function (file) {
     return file.match(/\*/) || fs.existsSync(file);
 };
 

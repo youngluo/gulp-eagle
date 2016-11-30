@@ -1,0 +1,1 @@
+var Eagle = require('./index');

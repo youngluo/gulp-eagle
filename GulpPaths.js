@@ -1,11 +1,11 @@
-var p = require('path');
-var gutils = require('gulp-util');
-var parsePath = require('parse-filepath');
+var p = require('path'),
+    gutils = require('gulp-util'),
+    parsePath = require('parse-filepath');
 
 /**
  * Create a new GulpPaths constructor.
  */
-var GulpPaths = function() {};
+var GulpPaths = function () {};
 
 /**
  * Set the Gulp src file(s) and path prefix.
@@ -14,15 +14,13 @@ var GulpPaths = function() {};
  * @param  {string|null}  prefix
  * @return {GulpPaths}
  */
-GulpPaths.prototype.src = function(src, prefix) {
+GulpPaths.prototype.src = function (src, prefix) {
     var self = this;
 
-    src = this.prefix(src, prefix);
+    src = self.prefix(src, prefix);
 
     if (Array.isArray(src)) {
-        // If any item in the src array is a folder
-        // then we will fetch all of the files.
-        src = src.map(function(path) {
+        src = src.map(function (path) {
             if (self.parse(path).isDir) {
                 path += '/**/*';
             }
@@ -30,16 +28,16 @@ GulpPaths.prototype.src = function(src, prefix) {
             return path;
         });
 
-        this.src = { path: src, baseDir: prefix };
+        self.src = {
+            path: src,
+            baseDir: prefix
+        };
     } else {
-        this.src = this.parse(src);
-
-        // If a directory is provided as the Gulp src,
-        // the user probably wants everything in it.
-        this.src.isDir && (this.src.path += '/**/*');
+        self.src = self.parse(src);
+        self.src.isDir && (self.src.path += '/**/*');
     }
 
-    return this;
+    return self;
 };
 
 /**
@@ -49,17 +47,17 @@ GulpPaths.prototype.src = function(src, prefix) {
  * @param  {string|null} defaultName
  * @return {GulpPaths}
  */
-GulpPaths.prototype.output = function(output, defaultName) {
+GulpPaths.prototype.output = function (output, defaultName) {
     this.output = this.parse(output);
 
     // If the user didn't provide a path AND file name
     // then we'll do our best to choose a default.
-    if ( ! this.output.name && defaultName) {
+    if (!this.output.name && defaultName) {
         // We'll check to see if the provided src is not
         // an array. If so, we'll use that single file
         // name as the output name. But we must also
         // change the extension (.sass -> .css).
-        if ( ! Array.isArray(this.src.path) && this.src.name.indexOf('*') == -1) {
+        if (!Array.isArray(this.src.path) && this.src.name.indexOf('*') == -1) {
             defaultName = this.changeExtension(
                 this.src.name,
                 this.parse(defaultName).extension
@@ -79,7 +77,7 @@ GulpPaths.prototype.output = function(output, defaultName) {
  * @param  {string} newExtension
  * @return {string}
  */
-GulpPaths.prototype.changeExtension = function(path, newExtension) {
+GulpPaths.prototype.changeExtension = function (path, newExtension) {
     return gutils.replaceExtension(path, newExtension);
 };
 
@@ -90,10 +88,10 @@ GulpPaths.prototype.changeExtension = function(path, newExtension) {
  * @param  {string|null}  prefix
  * @return {string|Array}
  */
-GulpPaths.prototype.prefix = function(path, prefix) {
-    if ( ! prefix) return path;
+GulpPaths.prototype.prefix = function (path, prefix) {
+    if (!prefix) return path;
 
-    var prefixOne = function(path) {
+    var prefixOne = function (path) {
         // Given any path that begins with a period, we
         // can safely assume that the user wants to
         // skip the prefix and begin at the root.
@@ -126,17 +124,15 @@ GulpPaths.prototype.prefix = function(path, prefix) {
  * @param  {string} path
  * @return {object}
  */
-GulpPaths.prototype.parse = function(path) {
+GulpPaths.prototype.parse = function (path) {
     var segments = parsePath(path);
 
     return {
-        path      : path,
-        name      : segments.extname ? segments.basename : '',
-        extension : segments.extname,
-        isDir     : ! (!! segments.extname),
-        baseDir   : segments.extname
-                        ? segments.dirname
-                        : p.join(segments.dirname, segments.basename)
+        path: path,
+        name: segments.extname ? segments.basename : '',
+        extension: segments.extname,
+        isDir: !(!!segments.extname),
+        baseDir: segments.extname ? segments.dirname : p.join(segments.dirname, segments.basename)
     };
 };
 

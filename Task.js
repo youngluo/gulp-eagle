@@ -1,10 +1,10 @@
 var _ = require('lodash');
 
 var id = 0,
-    Elixir;
+    Eagle;
 
 /**
- * Create a new Task instance.
+ * Create a Task constructor.
  *
  * @param {string}   name
  * @param {Function} description detailed task
@@ -15,7 +15,11 @@ var Task = function (name, description) {
     this.watchers = [];
 
     if (description) {
-        this.describe(description);
+        this.definition = description;
+
+        this.register();
+
+        return this;
     }
 };
 
@@ -26,25 +30,9 @@ var Task = function (name, description) {
  * @return {Task}
  */
 Task.find = function (name) {
-    var tasks = _.where(Elixir.tasks, {
-        name: name
+    return _.find(Eagle.tasks, function (task) {
+        return task.name = name;
     });
-
-    return tasks[Elixir.config.activeTasks[name]];
-};
-
-/**
- * Describe the task. This is the Gulp definition.
- *
- * @param  {Function} definition
- * @return {Task}
- */
-Task.prototype.describe = function (definition) {
-    this.definition = definition;
-
-    this.register();
-
-    return this;
 };
 
 /**
@@ -53,10 +41,7 @@ Task.prototype.describe = function (definition) {
  * @return {Task}
  */
 Task.prototype.register = function () {
-    Elixir.tasks.push(this);
-
-    Elixir.config.activeTasks = Elixir.config.activeTasks || {};
-    Elixir.config.activeTasks[this.name] = 0;
+    Eagle.tasks.push(this);
 
     return this;
 };
@@ -106,20 +91,20 @@ Task.prototype.run = function () {
 Task.prototype.log = function (src, output) {
     var task = this.name.substr(0, 1).toUpperCase() + this.name.substr(1);
 
-    Elixir.Log
+    Eagle.Log
         .heading("Fetching " + task + " Source Files...")
         .files(src.path ? src.path : src, true);
 
     if (output) {
-        Elixir.Log
+        Eagle.Log
             .heading('Saving To...')
             .files(output.path ? output.path : output);
     }
 };
 
-module.exports = function (elixir) {
-    // Make Elixir available throughout this file.
-    Elixir = elixir;
+module.exports = function (eagle) {
+    // Make Eagle available throughout incoming the Eagle class.
+    Eagle = eagle;
 
     return Task;
 };

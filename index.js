@@ -7,24 +7,36 @@ var fs = require('fs'),
  * init class
  * @param {function} recipe callback
  */
-function Eagle(recipe) {
+var Eagle = function (recipe) {
 
-    //loading all default tasks
+    // Loading all default tasks
     require('require-dir')('./tasks');
 
     recipe(Eagle.mixins);
 
+    createGulpTasks.call(Eagle);
 }
 
 Eagle.mixins = {};
 
 Eagle.plugins = require('gulp-load-plugins')();
 
+// Get Logger class 
+Eagle.Log = require('./Logger');
+
+// Get Notification class
+Eagle.Notification = require('./Notification');
+
+// Get GulpPaths class
+Eagle.GulpPaths = require('./GulpPaths');
+
+// Read config info
 Eagle.config = require('./Config');
 
-//Elixir.Task = require('./Task')(Elixir);
+// Get Task class
+Eagle.Task = require('./Task')(Eagle);
 
-//read the init task by config
+// Read the init task by config
 Eagle.tasks = Eagle.config.tasks;
 
 Eagle.extend = function (name, callback) {
@@ -40,7 +52,7 @@ function createGulpTasks() {
     var tasks = this.tasks;
 
     tasks.forEach(function (task) {
-        if (_.contains(gulp.tasks, task.name)) return;
+        if (_.includes(gulp.tasks, task.name)) return;
 
         gulp.task(task.name, function () {
 
@@ -53,14 +65,13 @@ function createGulpTasks() {
                     });
             }
 
-            var gulp = Elixir.Task.find(task.name).run();
-
-            Elixir.config.activeTasks[task.name]++;
-
-            return gulp;
+            return Eagle.Task.find(task.name).run();
         });
     });
 };
 
-
 module.exports = Eagle;
+
+Eagle(function (mix) {
+    mix.copy('a', 'b');
+})
