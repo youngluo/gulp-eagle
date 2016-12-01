@@ -27,7 +27,7 @@ Eagle.Log = require('./Logger');
 
 Eagle.Notification = require('./Notification');
 
-Eagle.GulpPaths = require('./GulpPaths');
+Eagle.GulpPaths = require('./GulpPaths')(Eagle);
 
 Eagle.Task = require('./Task')(Eagle);
 

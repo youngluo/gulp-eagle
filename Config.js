@@ -1,6 +1,6 @@
 var p = require('path'),
     gutils = require('gulp-util'),
-    production = gutils.env.production || process.env.NODE_ENV === 'production';
+    production = gutils.env.production;
 
 var config = {
 
@@ -31,7 +31,7 @@ var config = {
      * Quite useful for debugging, it's turned on by default.
      */
 
-    sourcemaps: !gutils.env.production,
+    sourcemaps: !production,
 
     /**
      * You likely won't need to modify this object. That said, should
@@ -79,7 +79,7 @@ var config = {
         babel: {
             // https://www.npmjs.com/package/gulp-babel#babel-options
             options: {
-                presets: ['es2015', 'react']
+                presets: ['es2015']
             }
         },
 
@@ -98,12 +98,12 @@ var config = {
             externals: [],
 
             transformers: [
-                {
+               /* {
                     name: 'babelify',
 
                     // https://www.npmjs.com/package/gulp-babel#babel-options
                     options: {
-                        presets: ['es2015', 'react']
+                        presets: ['es2015']
                     }
                 },
 
@@ -112,7 +112,7 @@ var config = {
 
                     // https://www.npmjs.com/package/partialify
                     options: {}
-                }
+                }*/
             ],
 
             watchify: {
@@ -138,33 +138,5 @@ var config = {
     }
 
 };
-
-/**
- * Fetch a config item, using a string dot-notation.
- *
- * @param  {string} path
- * @return {string}
- */
-config.get = function (path) {
-    var basePath;
-    var current = config;
-
-    var segments = path.split('.');
-
-    // If the path begins with "assets" or "public," then
-    // we can assume that the user wants to prefix the
-    // given base url to their config path. Useful!
-
-    if (segments[0] == 'assets' || segments[0] == 'public') {
-        basePath = config[segments.shift() + 'Path'];
-    }
-
-    segments.forEach(function (segment) {
-        current = current[segment];
-    });
-
-    return p.join(basePath, current);
-};
-
 
 module.exports = config;

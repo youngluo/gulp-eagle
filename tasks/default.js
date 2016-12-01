@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 gulp.task('default', function (cb) {
     var tasks = _.map(Eagle.tasks, function (task) {
         return task.name;
-    }).join(',');
+    });
 
-    sequence(tasks)(cb);
+    sequence.apply(this, tasks)(cb);
 });

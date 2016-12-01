@@ -1,6 +1,7 @@
 var p = require('path'),
     gutils = require('gulp-util'),
-    parsePath = require('parse-filepath');
+    parsePath = require('parse-filepath'),
+    Eagle;
 
 /**
  * Create a new GulpPaths constructor.
@@ -48,6 +49,7 @@ GulpPaths.prototype.src = function (src, prefix) {
  * @return {GulpPaths}
  */
 GulpPaths.prototype.output = function (output, defaultName) {
+    output = output ? p.join(Eagle.config.buildPath, output) : Eagle.config.buildPath;
     this.output = this.parse(output);
 
     // If the user didn't provide a path AND file name
@@ -136,4 +138,9 @@ GulpPaths.prototype.parse = function (path) {
     };
 };
 
-module.exports = GulpPaths;
+module.exports = function (eagle) {
+    // Make Eagle available throughout incoming the Eagle class.
+    Eagle = eagle;
+
+    return GulpPaths;
+};

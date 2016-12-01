@@ -5,9 +5,8 @@ var gulp = require('gulp'),
 
 
 gulp.task('watch', function () {
-    var tasks = _.sortBy(Eagle.tasks, 'name');
-
-    var mergedTasks = {};
+    var tasks = _.sortBy(Eagle.tasks, 'name'),
+        mergedTasks = {};
 
     if (isWatchingBrowserify(tasks)) {
         Eagle.config.js.browserify.watchify.enabled = true;
@@ -15,9 +14,9 @@ gulp.task('watch', function () {
         gulp.start('browserify');
     }
 
-    tasks.forEach(function (task) {
+    // Merge task watchers, if the task is the same.
 
-        // Merge task watchers, if the task is the same.
+    tasks.forEach(function (task) {
         if (task.name in mergedTasks) {
             return mergedTasks[task.name].watchers = _.union(mergedTasks[task.name].watchers, task.watchers);
         }
@@ -37,12 +36,9 @@ gulp.task('watch', function () {
     });
 });
 
-/**
- * Determine if Browserify is included in the list.
- *
- * @param  {object} tasks
- * @return {boolean}
- */
-var isWatchingBrowserify = function (tasks) {
-    return _.contains(_.pluck(tasks, 'name'), 'browserify');
-};
+
+function isWatchingBrowserify(tasks) {
+    return _.find(tasks, function (task) {
+        return task.name == 'browserify';
+    });
+}
