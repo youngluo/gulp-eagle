@@ -52,7 +52,7 @@ var config = {
 
             // https://www.npmjs.com/package/gulp-autoprefixer#api
             options: {
-                browsers: ['last 2 versions'],
+                browsers: ['last 2 versions', 'safari 5', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],
                 cascade: false
             }
         },
@@ -67,7 +67,7 @@ var config = {
         sass: {
             // https://github.com/sass/node-sass#options
             pluginOptions: {
-                outputStyle: production ? 'compressed' : 'nested',
+                outputStyle: production ? 'compressed' : 'expanded',
                 precision: 10
             }
         }
@@ -131,12 +131,14 @@ var config = {
      */
 
     browserSync: {
-        // http://www.browsersync.io/docs/options/
-        proxy: 'homestead.app',
-        reloadOnRestart: true,
-        notify: true
-    }
+        port: 8080,
+        startPath: "/index.html"
+    },
 
+    spa: {
+        enabled: false,
+        multiple: false
+    }
 };
 
 module.exports = config;

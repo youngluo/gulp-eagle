@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     Eagle = require('../index'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
+    bs = require('browser-sync').create(),
 
     bundle,
     $ = Eagle.plugins,
