@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 
 Eagle.extend('sass', function (src, output) {
     var paths = new Eagle.GulpPaths().src(src).output(output);
-    console.log(paths);
+  
     new Eagle.Task('sass', function () {
             this.log(paths.src, paths.output);
 

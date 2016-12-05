@@ -1,6 +1,6 @@
 var p = require('path'),
     gutils = require('gulp-util'),
-    production = gutils.env.production;
+    production = gutils.env.production || false;
 
 var config = {
 
