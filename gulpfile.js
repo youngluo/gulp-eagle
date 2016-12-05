@@ -6,5 +6,6 @@ Eagle(function (mix) {
       .copy('src/base/assets', 'assets')*/
     //        .sass('src/base/**/*.scss')
     //        .clean('src/temp')
-        .image('src/base/assets/images/**/*.{jpg,jpeg,png,gif}', 'assets/images')
+    //        .image('src/base/assets/images/**/*.{jpg,jpeg,png,gif}', 'assets/images')
+        .jsonIn('src/base/i18n/**/*.json', 'i18n')
 })

@@ -20,16 +20,10 @@ var config = {
     production: production,
 
     /**
-     * After packaging the output path
+     * After packaging the output path.
      */
 
     buildPath: 'build',
-
-    /**
-     * A sourcemap is a JSON mapping, which declares a relationship
-     * between a minified file and its original source location.
-     * Quite useful for debugging, it's turned on by default.
-     */
 
     sourcemaps: !production,
 
@@ -83,12 +77,6 @@ var config = {
             }
         },
 
-        /**
-         * Browserify allows you to pull in Node modules in the browser!
-         * Generally a pain to get up and running, Elixir offers many
-         * sensible defaults to get you up to speed super quickly.
-         */
-
         browserify: {
             // https://www.npmjs.com/package/browserify#usage
             options: {},
@@ -125,10 +113,7 @@ var config = {
 
     },
 
-    /**
-     * Browser refresh instantly upon changing a bit
-     * of sass or modifying a view or js.
-     */
+    //Browser refresh automatically.
 
     browserSync: {
         port: 8080,
@@ -137,7 +122,13 @@ var config = {
 
     spa: {
         enabled: false,
-        multiple: false
+
+        // Support multiple subprojects.
+        multiple: false,
+
+        translate: {
+            languages: []
+        }
     }
 };
 

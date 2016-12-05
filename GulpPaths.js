@@ -3,22 +3,16 @@ var p = require('path'),
     parsePath = require('parse-filepath'),
     Eagle;
 
-/**
- * Create a new GulpPaths constructor.
- */
 var GulpPaths = function () {};
 
 /**
- * Set the Gulp src file(s) and path prefix.
+ * Set the Gulp src file(s).
  *
  * @param  {string|Array} src
- * @param  {string|null}  prefix
  * @return {GulpPaths}
  */
-GulpPaths.prototype.src = function (src, prefix) {
+GulpPaths.prototype.src = function (src) {
     var self = this;
-
-    src = self.prefix(src, prefix);
 
     if (Array.isArray(src)) {
         src = src.map(function (path) {
@@ -29,10 +23,7 @@ GulpPaths.prototype.src = function (src, prefix) {
             return path;
         });
 
-        self.src = {
-            path: src,
-            baseDir: prefix
-        };
+        self.src.path = src;
     } else {
         self.src = self.parse(src);
         self.src.isDir && (self.src.path += '/**/*');
@@ -81,43 +72,6 @@ GulpPaths.prototype.output = function (output, defaultName) {
  */
 GulpPaths.prototype.changeExtension = function (path, newExtension) {
     return gutils.replaceExtension(path, newExtension);
-};
-
-/**
- * Apply a path prefix to the path(s).
- *
- * @param  {string|Array} path
- * @param  {string|null}  prefix
- * @return {string|Array}
- */
-GulpPaths.prototype.prefix = function (path, prefix) {
-    if (!prefix) return path;
-
-    var prefixOne = function (path) {
-        // Given any path that begins with a period, we
-        // can safely assume that the user wants to
-        // skip the prefix and begin at the root.
-        if (path.indexOf('./') == 0) {
-            return path;
-        }
-
-        // If path starts with "!" we need to negate him
-        if (path.indexOf('!') == 0) {
-            path = '!' + p.join(prefix, path.substring(1));
-        } else {
-            path = p.join(prefix, path);
-        }
-
-        return path.replace(/\/\//g, '/')
-            .replace(/\/\//g, '/')
-            .replace(p.join(prefix, prefix), prefix);
-    };
-
-    if (Array.isArray(path)) {
-        return path.map(prefixOne);
-    }
-
-    return prefixOne(path);
 };
 
 /**
