@@ -1,6 +1,6 @@
 var p = require('path'),
     gutils = require('gulp-util'),
-    production = gutils.env.production || false;
+    production = gutils.env.prod || false;
 
 var config = {
 
@@ -71,6 +71,7 @@ var config = {
     js: {
 
         babel: {
+            enabled: false,
             // https://www.npmjs.com/package/gulp-babel#babel-options
             options: {
                 presets: ['es2015']

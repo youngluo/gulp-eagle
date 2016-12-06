@@ -4,10 +4,8 @@ var gulp = require('gulp'),
     $ = Eagle.plugins,
     config = Eagle.config;
 
-Eagle.extend('script', function (src, output, options) {
+Eagle.extend('script', function (src, output) {
     var paths = new Eagle.GulpPaths().src(src).output(output);
-
-    options = options || {};
 
     new Eagle.Task('script', function () {
             this.log(paths.src, paths.output);
@@ -16,7 +14,7 @@ Eagle.extend('script', function (src, output, options) {
                 gulp
                 .src(paths.src.path)
                 .pipe($.if(config.sourcemaps, $.sourcemaps.init()))
-                .pipe($.if(!!options.babel, $.babel(config.js.babel.options)))
+                .pipe($.if(config.js.babel.enabled, $.babel(config.js.babel.options)))
                 .on('error', function (e) {
                     new Eagle.Notification().error(e, 'Babel Compilation Failed!');
                     this.emit('end');

@@ -7,7 +7,7 @@ Eagle(function (mix) {
     //        .sass('src/base/**/*.scss')
     //        .clean('src/temp')
     //        .image('src/base/assets/images/**/*.{jpg,jpeg,png,gif}', 'assets/images')
-    /*  .jsonIn('src/base/i18n/cn/*.json', 'i18n/cn.json')
-      .jsonIn('src/base/i18n/en/*.json', 'i18n/en.json')*/
-        .script('src/base/*/**/*.js', 'base')
+//        .merge('src/base/i18n/cn/*.json', 'i18n/cn.json')
+//        .merge('src/base/i18n/en/*.json', 'i18n/en.json')
+//        .merge('src/base/*/**/*.js', 'base/app.js')
 })

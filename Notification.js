@@ -18,6 +18,7 @@ Notification.prototype.message = function (message) {
     return notify({
         title: this.title,
         message: message,
+        icon: __dirname + '/icons/pass.png',
         onLast: true
     });
 };
