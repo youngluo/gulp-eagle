@@ -23,6 +23,14 @@ var Task = function (name, description) {
     }
 };
 
+Task.find = function (name) {
+    var tasks = _.filter(Eagle.tasks, function (task) {
+        return task.name == name;
+    });
+
+    return tasks[Eagle.config.activeTasks[name]];
+}
+
 /**
  * Set the task to be called, when firing `Gulp`.
  *
@@ -31,7 +39,18 @@ var Task = function (name, description) {
 Task.prototype.register = function () {
     Eagle.tasks.push(this);
 
+    // Make a single task can be triggered multiple times.
+    Eagle.config.activeTasks = Eagle.config.activeTasks || {};
+    Eagle.config.activeTasks[this.name] = 0;
+
     return this;
+};
+
+/**
+ * Execute the task definition.
+ */
+Task.prototype.run = function () {
+    return this.definition();
 };
 
 /**
@@ -46,8 +65,6 @@ Task.prototype.watch = function (regex, category) {
         this.watchers.push(regex);
     }
 
-    //this.category = category || 'default';
-
     return this;
 };
 
@@ -61,13 +78,6 @@ Task.prototype.ignore = function (path) {
     this.watchers.push(('!./' + path).replace('././', './'));
 
     return this;
-};
-
-/**
- * Execute the task definition.
- */
-Task.prototype.run = function () {
-    return this.definition();
 };
 
 /**

@@ -52,11 +52,16 @@ Eagle.extend = function (name, callback) {
 
 
 function createGulpTasks() {
+
     this.tasks.forEach(function (task) {
         if (_.includes(gulp.tasks, task.name)) return;
 
         gulp.task(task.name, function () {
-            return task.run();
+            var gulpTask = Eagle.Task.find(task.name).run();
+
+            Eagle.config.activeTasks[task.name]++;
+
+            return gulpTask;
         });
     });
 };

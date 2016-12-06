@@ -1,15 +1,11 @@
 var notify = require('gulp-notify');
 
-/**
- * Create a new Notification instance.
- */
-var Notification = function () {
+
+var Notification = function (message) {
     this.title = 'Gulp Eagle';
 
-    // If an argument is provided, then we'll
-    // assume they want to show a message.
-    if (arguments.length) {
-        return this.message(arguments[0]);
+    if (message) {
+        return this.message(message);
     }
 };
 

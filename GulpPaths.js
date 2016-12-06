@@ -41,15 +41,14 @@ GulpPaths.prototype.src = function (src) {
  */
 GulpPaths.prototype.output = function (output, defaultName) {
     output = output ? p.join(Eagle.config.buildPath, output) : Eagle.config.buildPath;
+
     this.output = this.parse(output);
 
-    // If the user didn't provide a path AND file name
-    // then we'll do our best to choose a default.
     if (!this.output.name && defaultName) {
         // We'll check to see if the provided src is not
         // an array. If so, we'll use that single file
         // name as the output name. But we must also
-        // change the extension (.sass -> .css).
+        // change the extension (.scss -> .css).
         if (!Array.isArray(this.src.path) && this.src.name.indexOf('*') == -1) {
             defaultName = this.changeExtension(
                 this.src.name,
@@ -75,7 +74,7 @@ GulpPaths.prototype.changeExtension = function (path, newExtension) {
 };
 
 /**
- * Parse the given file path.
+ * Parse the file path.
  *
  * @param  {string} path
  * @return {object}

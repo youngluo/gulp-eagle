@@ -117,7 +117,7 @@ var config = {
 
     browserSync: {
         port: 8080,
-        startPath: "/index.html"
+        startPath: 'index.html'
     },
 
     spa: {
