@@ -13,4 +13,5 @@ Eagle(function (mix) {
         //        .merge('src/base/i18n/en/*.json', 'i18n/en.json')
         //        .merge('src/base/*/**/*.js', 'base/app.js')
         //        .script('src/base/*/**/*.js')
+        .style('build/**/*.css', 'css2')
 })
