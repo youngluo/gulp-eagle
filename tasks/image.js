@@ -17,7 +17,7 @@ Eagle.extend('image', function (src, output) {
                     progressive: true
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
-                .pipe(new Eagle.Notification('Image Compressd!'))
+                .pipe($.if(config.production, new Eagle.Notification('Image Compressd!')))
             );
         })
         .watch(paths.src.path)

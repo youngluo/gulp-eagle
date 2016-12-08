@@ -12,7 +12,10 @@ var GulpPaths = function () {};
  * @return {GulpPaths}
  */
 GulpPaths.prototype.src = function (src) {
-    var self = this;
+    var self = this,
+        prefix = Eagle.config.buildPath;
+
+    src = this.prefix(src, prefix);
 
     if (Array.isArray(src)) {
         src = src.map(function (path) {
@@ -23,7 +26,9 @@ GulpPaths.prototype.src = function (src) {
             return path;
         });
 
-        self.src.path = src;
+        self.src = {
+            path: src
+        };
     } else {
         self.src = self.parse(src);
         self.src.isDir && (self.src.path += '/**/*');
@@ -71,6 +76,40 @@ GulpPaths.prototype.output = function (output, defaultName) {
  */
 GulpPaths.prototype.changeExtension = function (path, newExtension) {
     return gutils.replaceExtension(path, newExtension);
+};
+
+/**
+ * Apply a path prefix to the path(s).
+ *
+ * @param  {string|Array} path
+ * @param  {string|null}  prefix
+ * @return {string|Array}
+ */
+GulpPaths.prototype.prefix = function (path, prefix) {
+    if (!prefix) return path;
+
+    var prefixOne = function (path) {
+
+        if (path.indexOf('./') == 0) {
+            return path;
+        }
+
+        // If path starts with "!" we need to negate him
+        if (path.indexOf('!') == 0) {
+            path = '!' + p.join(prefix, path.substring(1));
+        } else {
+            path = p.join(prefix, path);
+        }
+
+        return path.replace(/\/\//g, '/')
+            .replace(p.join(prefix, prefix), prefix);
+    };
+
+    if (Array.isArray(path)) {
+        return path.map(prefixOne);
+    }
+
+    return prefixOne(path);
 };
 
 /**

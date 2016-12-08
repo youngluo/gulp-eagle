@@ -22,6 +22,7 @@ Eagle.extend('browserSync', function () {
     // Browsersync will only run during `gulp watch`.
 
     if (gutils.env._.indexOf('watch') > -1) {
+        console.log('-----------------')
         browserSync.init(options);
     }
 

@@ -87,21 +87,14 @@ var config = {
             externals: [],
 
             transformers: [
-               /* {
+                {
                     name: 'babelify',
 
                     // https://www.npmjs.com/package/gulp-babel#babel-options
                     options: {
                         presets: ['es2015']
                     }
-                },
-
-                {
-                    name: 'partialify',
-
-                    // https://www.npmjs.com/package/partialify
-                    options: {}
-                }*/
+                }
             ],
 
             watchify: {
@@ -117,9 +110,17 @@ var config = {
     //Browser refresh automatically.
 
     browserSync: {
-        port: 8080,
-        startPath: 'index.html'
+        enabled: false,
+        options: {
+            port: 8080,
+            startPath: 'index.html'
+        },
+
+        // Server baseDir
+        baseDir: '',
     },
+
+    cdn: '',
 
     spa: {
         enabled: false,

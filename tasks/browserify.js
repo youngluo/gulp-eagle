@@ -73,23 +73,26 @@ var prepGulpPaths = function (src, output) {
  * @param {object} data
  */
 var browserifyStream = function (data) {
-    var stream = browserify(data.paths.src.path, data.options);
+    var stream = browserify(data.paths.src.path, data.options),
+        browserifyConfig = config.js.browserify;
 
-    config.js.browserify.transformers.forEach(function (transformer) {
+    browserifyConfig.transformers.forEach(function (transformer) {
+        if (!config.js.babel.enabled && transformer.name == 'babelify') return;
+
         stream.transform(
             require(transformer.name), transformer.options || {}
         );
     });
 
-    config.js.browserify.plugins.forEach(function (plugin) {
+    browserifyConfig.plugins.forEach(function (plugin) {
         stream.plugin(
             require(plugin.name), plugin.options || {}
         );
     });
 
-    config.js.browserify.externals.forEach(function (external) {
-        stream.external(external);
-    });
+    if (browserifyConfig.externals.length) {
+        stream.external(browserifyConfig.externals);
+    }
 
     return stream;
 };

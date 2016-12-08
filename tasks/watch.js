@@ -1,7 +1,10 @@
-var gulp = require('gulp'),
+var path = require('path'),
+    gulp = require('gulp'),
     _ = require('lodash'),
     batch = require('gulp-batch'),
-    Eagle = require('../index');
+    bs = require('browser-sync').create(),
+    Eagle = require('../index'),
+    config = Eagle.config;
 
 
 gulp.task('watch', function () {
@@ -34,6 +37,10 @@ gulp.task('watch', function () {
             }));
         }
     });
+
+    if (config.browserSync.enabled) {
+        browserSync();
+    }
 });
 
 
@@ -41,4 +48,20 @@ function isWatchingBrowserify(tasks) {
     return _.find(tasks, function (task) {
         return task.name == 'browserify';
     });
+}
+
+
+function browserSync() {
+    var baseDir = config.browserSync.baseDir,
+
+        options = _.extend({}, config.browserSync.options, {
+            files: [config.buildPath + '/**/*'],
+            available: true,
+            reloadDelay: 0,
+            server: {
+                baseDir: baseDir ? path.join(config.buildPath, baseDir) : config.buildPath
+            }
+        });
+
+    bs.init(options);
 }
