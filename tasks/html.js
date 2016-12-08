@@ -12,11 +12,9 @@ Eagle.extend('html', function (src, output, options) {
         options = options || {};
     }
 
-    var manifest = config.buildPath + '/**/rev-manifest.json';
+    var manifest = config.buildPath + '/rev-manifest.json',
 
-    src = Array.isArray(src) ? src.contact(manifest) : [src, manifest];
-
-    var paths = new Eagle.GulpPaths().src(src).output(output);
+        paths = new Eagle.GulpPaths().src(src).output(output);
 
     new Eagle.Task('html', function () {
             this.log(paths.src, paths.output);

@@ -1,4 +1,5 @@
-var del = require('del'),
+var fs = require('fs'),
+    del = require('del'),
     vinylPaths = require('vinyl-paths'),
     gulp = require('gulp'),
     Eagle = require('../index'),
@@ -12,6 +13,8 @@ Eagle.extend('version', function (src) {
         this.log(paths.src, paths.output);
 
         var files = vinylPaths();
+
+        delBuildHashFiles();
 
         return (
             gulp.src(paths.src.path)
@@ -29,3 +32,19 @@ Eagle.extend('version', function (src) {
         );
     })
 });
+
+function delBuildHashFiles() {
+    var manifest = config.buildPath + '/rev-manifest.json';
+
+    fs.stat(manifest, function (err, stat) {
+        if (!err) {
+            manifest = JSON.parse(fs.readFileSync(manifest));
+
+            for (var key in manifest) {
+                del.sync(config.buildPath + '/' + manifest[key], {
+                    force: true
+                });
+            }
+        }
+    });
+};

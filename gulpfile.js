@@ -1,18 +1,21 @@
-var Eagle = require('./index');
+var Eagle = require('./index'),
+    config = Eagle.config;
+
+config.browserSync.options.startPath = 'aaa.html';
 
 Eagle(function (mix) {
     mix
         .clean()
-        .sass('./src/base/*/**/*.scss', 'css', {
+        .sass('./src/**/*.scss', 'css', {
             removePath: true
         })
-        .merge('css/*.css', 'index.css')
-        .script('./src/base/*/**/*.js', 'js', {
+        //.merge('**/*.css', 'index.css')
+        .script('./src/**/*.js', 'js', {
             removePath: true
         })
-        .merge('js/*.js', 'index.js')
+        // .merge('**/*.js', 'index.js')
         .version('**/*.{js,css}')
-        .html('./src/*/index.html', {
+        .html('./src/**/*.html', {
             removePath: true
         })
 })

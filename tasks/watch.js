@@ -55,7 +55,7 @@ function browserSync() {
     var baseDir = config.browserSync.baseDir,
 
         options = _.extend({}, config.browserSync.options, {
-            files: [config.buildPath + '/**/*'],
+            files: [config.buildPath + '/**/*', '!' + config.buildPath + '/**/*.map'],
             available: true,
             reloadDelay: 0,
             server: {

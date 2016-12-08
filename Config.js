@@ -110,7 +110,7 @@ var config = {
     //Browser refresh automatically.
 
     browserSync: {
-        enabled: false,
+        enabled: true,
         options: {
             port: 8080,
             startPath: 'index.html'
