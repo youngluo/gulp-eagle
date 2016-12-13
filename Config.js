@@ -126,7 +126,7 @@ var config = {
         enabled: false,
 
         // Support multiple subprojects.
-        multiple: false,
+        //multiple: false,
 
         translate: {
             languages: []

@@ -11,7 +11,8 @@ var Logger = function () {};
  * @return {Logger}
  */
 Logger.heading = function (heading) {
-    console.log(''); // line break
+    // line break
+    console.log('');
 
     console.log(
         gutil.colors.black(gutil.colors.bgGreen(heading))

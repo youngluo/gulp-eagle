@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     Eagle = require('../index'),
+    _ = require('lodash'),
 
     $ = Eagle.plugins,
     config = Eagle.config;
@@ -8,9 +9,12 @@ Eagle.extend('style', function (src, output, options) {
     if (typeof output == 'object') {
         options = output;
         output = undefined;
-    } else {
-        options = options || {};
     }
+
+    options = _.merge({
+        base: null,
+        removePath: true
+    }, options);
 
     var paths = new Eagle.GulpPaths().src(src).output(output);
 

@@ -7,35 +7,39 @@ var fs = require('fs'),
     config = Eagle.config;
 
 Eagle.extend('version', function (src) {
-    var paths = new Eagle.GulpPaths().src(src).output();
+    var paths = new Eagle.GulpPaths().src(src).output(),
+        files = vinylPaths(),
+        manifest = config.buildPath + '/rev-manifest.json';
 
     new Eagle.Task('version', function () {
-        this.log(paths.src, paths.output);
+            this.log(paths.src, paths.output);
 
-        var files = vinylPaths();
 
-        delBuildHashFiles();
+            delBuildHashFiles(manifest);
 
-        return (
-            gulp.src(paths.src.path)
-            .pipe(gulp.dest(paths.output.baseDir))
-            .pipe(files)
-            .pipe($.rev())
-            .pipe(gulp.dest(paths.output.baseDir))
-            .pipe($.rev.manifest())
-            .pipe(gulp.dest(paths.output.baseDir))
-            .on('end', function () {
-                del(files.paths, {
-                    force: true
-                });
-            })
-        );
-    })
+            return (
+                gulp.src(paths.src.path, {
+                    base: config.buildPath
+                })
+                .pipe(gulp.dest(paths.output.baseDir))
+                .pipe(files)
+                .pipe($.rev())
+                .pipe(gulp.dest(paths.output.baseDir))
+                .pipe($.rev.manifest({
+                    merge: true
+                }))
+                .pipe(gulp.dest(paths.output.baseDir))
+                .on('end', function () {
+                    del(files.paths, {
+                        force: true
+                    });
+                })
+            )
+        })
+        .watch(manifest)
 });
 
-function delBuildHashFiles() {
-    var manifest = config.buildPath + '/rev-manifest.json';
-
+function delBuildHashFiles(manifest) {
     fs.stat(manifest, function (err, stat) {
         if (!err) {
             manifest = JSON.parse(fs.readFileSync(manifest));
