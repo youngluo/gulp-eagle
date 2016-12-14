@@ -12,11 +12,6 @@ var config = {
 
     tasks: [],
 
-    /**
-     * You may "turn on" this mode by triggering "gulp --production".
-     * This will enable such things, like CSS and JS minification.
-     */
-
     production: production,
 
     /**
@@ -122,18 +117,7 @@ var config = {
 
     cdn: '',
 
-    version: ['js', 'css', 'png', 'gif', 'jpg', 'jpeg'],
-
-    spa: {
-        enabled: false,
-
-        // Support multiple subprojects.
-        //multiple: false,
-
-        translate: {
-            languages: []
-        }
-    }
+    version: ['js', 'css', 'png', 'gif', 'jpg', 'jpeg']
 };
 
 module.exports = config;

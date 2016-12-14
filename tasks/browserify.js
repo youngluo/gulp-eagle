@@ -5,7 +5,6 @@ var gulp = require('gulp'),
     Eagle = require('../index'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
-    bs = require('browser-sync').create(),
 
     bundle,
     $ = Eagle.plugins,
@@ -13,7 +12,7 @@ var gulp = require('gulp'),
 
 Eagle.extend('browserify', function (src, output, options) {
     var paths = prepGulpPaths(src, output);
-
+  
     new Eagle.Task('browserify', function () {
             var stream = config.js.browserify.watchify.enabled ? watchifyStream : browserifyStream;
 
