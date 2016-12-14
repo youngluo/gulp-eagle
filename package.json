@@ -11,7 +11,8 @@
         "url": "git+https://github.com/youngluo/gulp-eagle.git"
     },
     "keywords": [
-        "gulp"
+        "gulp",
+        "gulp-eagle"
     ],
     "author": "Young Luo",
     "license": "MIT",
