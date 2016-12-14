@@ -6,8 +6,9 @@ var gulp = require('gulp'),
 
 Eagle.extend('merge', function (src, output) {
     var paths = new Eagle.GulpPaths().src(src).output(output),
-        extension = paths.src.extension;
-
+        extension = paths.src.extension,
+        isStaticResourceProd = isStaticResource(extension) && config.production;
+    
     new Eagle.Task('merge', function () {
             this.log(paths.src, paths.output);
 
@@ -15,6 +16,11 @@ Eagle.extend('merge', function (src, output) {
                 gulp
                 .src(paths.src.path)
                 .pipe($.if(isStaticResource(extension), $.concat(paths.output.name)))
+                .pipe($.if(isStaticResourceProd, $.uglify({
+                    compress: {
+                        drop_console: true
+                    }
+                })))
                 .pipe($.if(isJosn(extension), $.mergeJson(paths.output.name)))
                 .pipe(gulp.dest(paths.output.baseDir))
             );

@@ -17,7 +17,7 @@ Eagle.extend('sass', function (src, output, options) {
     }, options);
 
     var paths = new Eagle.GulpPaths().src(src).output(output);
-
+   
     new Eagle.Task('sass', function () {
             this.log(paths.src, paths.output);
 
@@ -37,7 +37,6 @@ Eagle.extend('sass', function (src, output, options) {
                 .pipe($.if(options.removePath, $.rename({
                     dirname: ''
                 })))
-                .pipe($.rev())
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe(new Eagle.Notification('Sass Compiled!'))
             )

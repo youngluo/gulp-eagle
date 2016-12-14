@@ -91,7 +91,7 @@ GulpPaths.prototype.prefix = function (path, prefix) {
     var prefixOne = function (path) {
 
         if (path.indexOf('./') == 0) {
-            return path;
+            return path.substring(2);
         }
 
         // If path starts with "!" we need to negate him

@@ -122,6 +122,8 @@ var config = {
 
     cdn: '',
 
+    version: ['js', 'css', 'png', 'gif', 'jpg', 'jpeg'],
+
     spa: {
         enabled: false,
 

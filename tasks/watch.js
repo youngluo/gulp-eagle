@@ -4,6 +4,8 @@ var path = require('path'),
     batch = require('gulp-batch'),
     bs = require('browser-sync').create(),
     Eagle = require('../index'),
+
+    $ = Eagle.plugins,
     config = Eagle.config;
 
 
@@ -32,7 +34,7 @@ gulp.task('watch', function () {
 
     _.sortBy(mergedTasks, 'name').forEach(function (task) {
         if (task.watchers.length) {
-            gulp.watch(task.watchers, batch(Eagle.config.batchOptions, function (events) {
+            $.watch(task.watchers, batch(Eagle.config.batchOptions, function (events) {
                 events.on('end', gulp.start(task.name));
             }));
         }

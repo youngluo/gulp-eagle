@@ -1,54 +1,47 @@
-var fs = require('fs'),
-    del = require('del'),
+var del = require('del'),
     vinylPaths = require('vinyl-paths'),
     gulp = require('gulp'),
     Eagle = require('../index'),
     $ = Eagle.plugins,
     config = Eagle.config;
 
-Eagle.extend('version', function (src) {
-    var paths = new Eagle.GulpPaths().src(src).output(),
-        files = vinylPaths(),
-        manifest = config.buildPath + '/rev-manifest.json';
+gulp.task('pre-version', function () {
 
-    new Eagle.Task('version', function () {
-            this.log(paths.src, paths.output);
+    var files = vinylPaths(),
+        src = config.buildPath + '/**/*.{' + config.version.join(',') + '}';
 
-
-            delBuildHashFiles(manifest);
-
-            return (
-                gulp.src(paths.src.path, {
-                    base: config.buildPath
-                })
-                .pipe(gulp.dest(paths.output.baseDir))
-                .pipe(files)
-                .pipe($.rev())
-                .pipe(gulp.dest(paths.output.baseDir))
-                .pipe($.rev.manifest({
-                    merge: true
-                }))
-                .pipe(gulp.dest(paths.output.baseDir))
-                .on('end', function () {
-                    del(files.paths, {
-                        force: true
-                    });
-                })
-            )
+    return (
+        gulp.src(src, {
+            base: config.buildPath
         })
-        .watch(manifest)
+        .pipe(files)
+        .pipe($.rev())
+        .pipe(gulp.dest(config.buildPath))
+        .pipe($.rev.manifest())
+        .pipe(gulp.dest(config.buildPath))
+        .on('end', function () {
+            del(files.paths, {
+                force: true
+            });
+        })
+    )
 });
 
-function delBuildHashFiles(manifest) {
-    fs.stat(manifest, function (err, stat) {
-        if (!err) {
-            manifest = JSON.parse(fs.readFileSync(manifest));
+gulp.task('version', ['pre-version'], function () {
 
-            for (var key in manifest) {
-                del.sync(config.buildPath + '/' + manifest[key], {
-                    force: true
-                });
-            }
-        }
-    });
-};
+    var manifest = config.buildPath + '/rev-manifest.json',
+        src = config.buildPath + '/**/*.{html,js,css}';
+
+    manifest = gulp.src(manifest);
+
+    return (
+        gulp.src(src, {
+            base: config.buildPath
+        })
+        .pipe($.revReplace({
+            manifest: manifest,
+            prefix: config.cdn
+        }))
+        .pipe(gulp.dest(config.buildPath))
+    )
+});

@@ -16,24 +16,16 @@ Eagle.extend('html', function (src, output, options) {
         removePath: true
     }, options);
 
-    var manifest = config.buildPath + '/rev-manifest.json',
-
-        paths = new Eagle.GulpPaths().src(src).output(output);
+    var paths = new Eagle.GulpPaths().src(src).output(output);
 
     new Eagle.Task('html', function () {
             this.log(paths.src, paths.output);
-
-            manifest = gulp.src(manifest);
 
             return (
                 gulp
                 .src(paths.src.path, {
                     base: options.base
                 })
-                .pipe($.revReplace({
-                    manifest: manifest,
-                    prefix: config.cdn
-                }))
                 .pipe($.if(options.removePath, $.rename({
                     dirname: ''
                 })))
