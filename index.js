@@ -3,12 +3,6 @@ var fs = require('fs'),
     _ = require('lodash'),
     gutils = require('gulp-util');
 
-/**
- * Create a Eagle constructor.
- * 
- * @param {function} callback
- */
-
 var Eagle = function (callback) {
 
     // Loading all default tasks.
