@@ -1,61 +1,61 @@
 {
-  "name": "gulp-eagle",
-  "version": "1.0.0",
-  "description": "gulp-eagle",
-  "main": "index.js",
-  "scripts": {
-    "test": ""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/youngluo/gulp-eagle.git"
-  },
-  "keywords": [
+    "name": "gulp-eagle",
+    "version": "1.1.0",
+    "description": "gulp-eagle",
+    "main": "index.js",
+    "scripts": {
+        "test": ""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/youngluo/gulp-eagle.git"
+    },
+    "keywords": [
     "gulp",
     "gulp-eagle"
   ],
-  "author": "Young Luo",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/youngluo/gulp-eagle/issues"
-  },
-  "homepage": "https://github.com/youngluo/gulp-eagle#readme",
-  "dependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "babelify": "^7.3.0",
-    "browser-sync": "^2.18.2",
-    "browserify": "^13.1.1",
-    "del": "^2.2.2",
-    "gulp-autoprefixer": "^3.1.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-batch": "^1.0.5",
-    "gulp-concat": "^2.6.1",
-    "gulp-cssnano": "^2.1.2",
-    "gulp-file-include": "^1.0.0",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-if": "^2.0.2",
-    "gulp-imagemin": "^3.1.1",
-    "gulp-load-plugins": "^1.4.0",
-    "gulp-merge-json": "^0.6.0",
-    "gulp-notify": "^2.2.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-rev": "^7.1.2",
-    "gulp-rev-replace": "^0.4.3",
-    "gulp-rimraf": "^0.2.1",
-    "gulp-sass": "^2.3.2",
-    "gulp-sequence": "^0.4.6",
-    "gulp-sourcemaps": "^1.9.1",
-    "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7",
-    "gulp-watch": "^4.3.11",
-    "lodash": "^4.17.2",
-    "parse-filepath": "^1.0.1",
-    "require-dir": "^0.3.1",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0"
-  },
-  "devDependencies": {
-    "gulp": "^3.9.1"
-  }
+    "author": "Young Luo",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/youngluo/gulp-eagle/issues"
+    },
+    "homepage": "https://github.com/youngluo/gulp-eagle#readme",
+    "dependencies": {
+        "babel-preset-es2015": "^6.18.0",
+        "babelify": "^7.3.0",
+        "browser-sync": "^2.18.2",
+        "browserify": "^13.1.1",
+        "del": "^2.2.2",
+        "gulp-autoprefixer": "^3.1.1",
+        "gulp-babel": "^6.1.2",
+        "gulp-batch": "^1.0.5",
+        "gulp-concat": "^2.6.1",
+        "gulp-cssnano": "^2.1.2",
+        "gulp-file-include": "^1.0.0",
+        "gulp-htmlmin": "^3.0.0",
+        "gulp-if": "^2.0.2",
+        "gulp-imagemin": "^3.1.1",
+        "gulp-load-plugins": "^1.4.0",
+        "gulp-merge-json": "^0.6.0",
+        "gulp-notify": "^2.2.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-rev": "^7.1.2",
+        "gulp-rev-replace": "^0.4.3",
+        "gulp-rimraf": "^0.2.1",
+        "gulp-sass": "^2.3.2",
+        "gulp-sequence": "^0.4.6",
+        "gulp-sourcemaps": "^1.9.1",
+        "gulp-uglify": "^2.0.0",
+        "gulp-util": "^3.0.7",
+        "gulp-watch": "^4.3.11",
+        "lodash": "^4.17.2",
+        "parse-filepath": "^1.0.1",
+        "require-dir": "^0.3.1",
+        "vinyl-buffer": "^1.0.0",
+        "vinyl-source-stream": "^1.1.0",
+        "watchify": "^3.7.0"
+    },
+    "devDependencies": {
+        "gulp": "^3.9.1"
+    }
 }
