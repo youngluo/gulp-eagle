@@ -10,9 +10,9 @@ var gulp = require('gulp'),
     $ = Eagle.plugins,
     config = Eagle.config;
 
-Eagle.extend('browserify', function (src, output, options) {
+Eagle.extend('browserify', function (src, output) {
     var paths = prepGulpPaths(src, output);
-  
+
     new Eagle.Task('browserify', function () {
             var stream = config.js.browserify.watchify.enabled ? watchifyStream : browserifyStream;
 
@@ -42,7 +42,7 @@ Eagle.extend('browserify', function (src, output, options) {
             return bundle(
                 stream({
                     paths: paths,
-                    options: options || config.js.browserify.options
+                    options: config.js.browserify.options
                 }),
                 paths
             );

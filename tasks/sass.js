@@ -6,18 +6,10 @@ var gulp = require('gulp'),
     config = Eagle.config;
 
 Eagle.extend('sass', function (src, output, options) {
-    if (typeof output == 'object') {
-        options = output;
-        output = undefined;
-    }
+    var params = Eagle.methods.processParams(src, output, options),
+        options = params.options,
+        paths = new Eagle.GulpPaths().src(params.src).output(params.output);
 
-    options = _.merge({
-        base: null,
-        removePath: true
-    }, options);
-
-    var paths = new Eagle.GulpPaths().src(src).output(output);
-   
     new Eagle.Task('sass', function () {
             this.log(paths.src, paths.output);
 

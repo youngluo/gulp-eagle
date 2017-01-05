@@ -6,17 +6,9 @@ var gulp = require('gulp'),
     config = Eagle.config;
 
 Eagle.extend('html', function (src, output, options) {
-    if (typeof output == 'object') {
-        options = output;
-        output = undefined;
-    }
-
-    options = _.merge({
-        base: null,
-        removePath: true
-    }, options);
-
-    var paths = new Eagle.GulpPaths().src(src).output(output);
+    var params = Eagle.methods.processParams(src, output, options),
+        options = params.options,
+        paths = new Eagle.GulpPaths().src(params.src).output(params.output);
 
     new Eagle.Task('html', function () {
             this.log(paths.src, paths.output);
@@ -26,6 +18,8 @@ Eagle.extend('html', function (src, output, options) {
                 .src(paths.src.path, {
                     base: options.base
                 })
+                .pipe($.if(config.html.include.enabled, $.fileInclude(config.html.include.options)))
+                .pipe($.if(config.html.compress.enabled, $.htmlmin(config.html.compress.options)))
                 .pipe($.if(options.removePath, $.rename({
                     dirname: ''
                 })))

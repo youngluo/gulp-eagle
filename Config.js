@@ -34,6 +34,26 @@ var config = {
         timeout: 1000
     },
 
+    html: {
+        compress: {
+            enabled: false,
+            //https://github.com/kangax/html-minifier#options-quick-reference
+            options: {
+                collapseWhitespace: true,
+                minifyCSS: true,
+                minifyJS: true
+            }
+        },
+        include: {
+            enabled: true,
+            //https://www.npmjs.com/package/gulp-file-include#options
+            options: {
+                prefix: '@@',
+                basepath: '@file'
+            }
+        }
+    },
+
     css: {
 
         autoprefix: {
@@ -116,6 +136,8 @@ var config = {
     },
 
     cdn: '',
+
+    removePath: true,
 
     version: ['js', 'css', 'png', 'gif', 'jpg', 'jpeg']
 };

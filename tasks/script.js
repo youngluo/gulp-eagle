@@ -6,17 +6,9 @@ var gulp = require('gulp'),
     config = Eagle.config;
 
 Eagle.extend('script', function (src, output, options) {
-    if (typeof output == 'object') {
-        options = output;
-        output = undefined;
-    }
-
-    options = _.merge({
-        base: null,
-        removePath: true
-    }, options);
-
-    var paths = new Eagle.GulpPaths().src(src).output(output);
+    var params = Eagle.methods.processParams(src, output, options),
+        options = params.options,
+        paths = new Eagle.GulpPaths().src(params.src).output(params.output);
 
     new Eagle.Task('script', function () {
             this.log(paths.src, paths.output);
@@ -24,7 +16,7 @@ Eagle.extend('script', function (src, output, options) {
             return (
                 gulp
                 .src(paths.src.path, {
-                    base: options.base || null
+                    base: options.base
                 })
                 .pipe($.if(config.sourcemaps, $.sourcemaps.init()))
                 .pipe($.if(config.js.babel.enabled, $.babel(config.js.babel.options)))

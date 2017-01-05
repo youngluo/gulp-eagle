@@ -7,21 +7,25 @@ var gulp = require('gulp'),
 Eagle.extend('merge', function (src, output) {
     var paths = new Eagle.GulpPaths().src(src).output(output),
         extension = paths.src.extension,
-        isStaticResourceProd = isStaticResource(extension) && config.production;
-    
+        isCss = isCssFile(extension),
+        isJs = isJsFile(extension),
+        isJson = isJsonFile(extension);
+
     new Eagle.Task('merge', function () {
             this.log(paths.src, paths.output);
 
             return (
                 gulp
                 .src(paths.src.path)
-                .pipe($.if(isStaticResource(extension), $.concat(paths.output.name)))
-                .pipe($.if(isStaticResourceProd, $.uglify({
+                .pipe($.if(isCss || isJs, $.concat(paths.output.name)))
+                .pipe($.if(isJs && config.production, $.uglify({
                     compress: {
                         drop_console: true
                     }
                 })))
-                .pipe($.if(isJosn(extension), $.mergeJson(paths.output.name)))
+                .pipe($.if(isCss && config.css.autoprefix.enabled, $.autoprefixer(config.css.autoprefix.options)))
+                .pipe($.if(isCss && config.production, $.cssnano(config.css.cssnano.pluginOptions)))
+                .pipe($.if(isJson, $.mergeJson(paths.output.name)))
                 .pipe(gulp.dest(paths.output.baseDir))
             );
         })
@@ -29,11 +33,14 @@ Eagle.extend('merge', function (src, output) {
         .ignore(paths.output.path);
 });
 
-function isJosn(ext) {
-    return '.json' == ext;
+function isJsonFile(ext) {
+    return '.json' == ext.toLowerCase();
 }
 
+function isCssFile(ext) {
+    return '.css' == ext.toLowerCase();
+}
 
-function isStaticResource(ext) {
-    return ['.js', '.css'].indexOf(ext) > -1 ? true : false;
+function isJsFile(ext) {
+    return '.js' == ext.toLowerCase();
 }

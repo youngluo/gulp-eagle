@@ -27,6 +27,8 @@ Eagle.Task = require('./Task')(Eagle);
 
 Eagle.config = require('./Config');
 
+Eagle.methods = require('./public')(Eagle);
+
 Eagle.tasks = Eagle.config.tasks;
 
 /**
