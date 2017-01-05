@@ -12,9 +12,6 @@ Gulp Eagle 是基于 Laravel Elixir 改写的gulp构建工具。
 	    mix
 	        .clean()
 	        .sass('./src/**/*.scss', 'css')
-	        .script('./src/**/*.js', 'js')
-	        .image('./src/image', 'image')
-	        .html('./src/**/*.html')
 	});
 
 
