@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     _ = require('lodash'),
 
     $ = Eagle.plugins,
+    bs = Eagle.BS,
     config = Eagle.config;
 
 Eagle.extend('sass', function (src, output, options) {
@@ -31,6 +32,7 @@ Eagle.extend('sass', function (src, output, options) {
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe(new Eagle.Notification('Sass Compiled!'))
+                .on('end', bs.reload)
             )
         })
         .watch(paths.src.path)

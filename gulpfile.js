@@ -1,4 +1,6 @@
-Eagle = require('./index');
+var Eagle = require('./index'),
+
+    prod = Eagle.config.production;
 
 Eagle(function (mix) {
     mix
@@ -8,7 +10,10 @@ Eagle(function (mix) {
         .script('./src/**/*.js', 'js')
         .merge('js/*.js', 'app.js')
         .merge('css/*.css', 'app.css')
-        .clean(['css', 'js'])
         .copy('./src/assets/fonts', 'assets/fonts')
         .image('./src/assets/images', 'assets/images')
+
+    if (prod) {
+        mix.clean(['css', 'js'])
+    }
 })

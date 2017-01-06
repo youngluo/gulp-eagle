@@ -1,0 +1,12 @@
+
+body {
+  font-size: 12px;
+}
+
+body {
+  background-image: url(/assets/images/bg.jpg);
+}
+
+body p {
+  background-color: #ff0;
+}

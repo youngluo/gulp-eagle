@@ -2,6 +2,7 @@ var gulp = require('gulp'),
     Eagle = require('../index'),
 
     $ = Eagle.plugins,
+    bs = Eagle.BS,
     config = Eagle.config;
 
 Eagle.extend('image', function (src, output, options) {
@@ -25,6 +26,7 @@ Eagle.extend('image', function (src, output, options) {
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe($.if(config.production, new Eagle.Notification('Image Compressd!')))
+                .on('end', bs.reload)
             );
         })
         .watch(paths.src.path)
