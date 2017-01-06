@@ -1,6 +1,6 @@
 # Gulp Eagle
 
-## 介绍
+## 简介
 
 Gulp Eagle 是基于 Laravel Elixir 改写的gulp构建工具。
 
@@ -20,7 +20,9 @@ Gulp Eagle 是基于 Laravel Elixir 改写的gulp构建工具。
 
 * 增加压缩html代码功能；
 
-* html文件中可include公共文件。
+* html文件中可include公共文件；
+
+* 优化浏览器自动刷新功能。
     
 
 

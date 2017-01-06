@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     _ = require('lodash'),
 
     $ = Eagle.plugins,
+    bs = Eagle.BS,
     config = Eagle.config;
 
 Eagle.extend('script', function (src, output, options) {
@@ -35,6 +36,7 @@ Eagle.extend('script', function (src, output, options) {
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe($.if(config.production, new Eagle.Notification('Script Compressd!')))
+                .on('end', bs.reload)
             );
         })
         .watch(paths.src.path)

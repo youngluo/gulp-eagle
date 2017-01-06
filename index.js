@@ -23,6 +23,8 @@ Eagle.Notification = require('./Notification');
 
 Eagle.GulpPaths = require('./GulpPaths')(Eagle);
 
+Eagle.BS = require('browser-sync').create();
+
 Eagle.Task = require('./Task')(Eagle);
 
 Eagle.config = require('./Config');

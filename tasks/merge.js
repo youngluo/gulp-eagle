@@ -2,6 +2,7 @@ var gulp = require('gulp'),
     Eagle = require('../index'),
 
     $ = Eagle.plugins,
+    bs = Eagle.BS,
     config = Eagle.config;
 
 Eagle.extend('merge', function (src, output) {
@@ -27,6 +28,7 @@ Eagle.extend('merge', function (src, output) {
                 .pipe($.if(isCss && config.production, $.cssnano(config.css.cssnano.pluginOptions)))
                 .pipe($.if(isJson, $.mergeJson(paths.output.name)))
                 .pipe(gulp.dest(paths.output.baseDir))
+                .on('end', bs.reload)
             );
         })
         .watch(paths.src.path)
