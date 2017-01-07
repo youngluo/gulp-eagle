@@ -61,7 +61,7 @@ var config = {
 
             // https://www.npmjs.com/package/gulp-autoprefixer#api
             options: {
-                browsers: ['last 2 versions', 'safari 5', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],
+                browsers: ['last 2 versions', 'safari 5', 'ie 9', 'ios 6', 'android 4'],
                 cascade: false
             }
         },
