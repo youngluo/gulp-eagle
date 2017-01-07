@@ -1,1 +1,0 @@
-{"version":3,"names":[],"mappings":"","sources":["bbb/bbb.js"],"sourcesContent":["console.log('bbbbb')\r\n\r\nfunction bbb() {\r\n    var aaa = 1;\r\n    alert(aaa)\r\n}"],"file":"bbb.js"}
