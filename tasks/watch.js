@@ -3,7 +3,6 @@ var path = require('path'),
     _ = require('lodash'),
     Eagle = require('../index'),
     bs = Eagle.BS,
-
     $ = Eagle.plugins,
     config = Eagle.config;
 
@@ -78,8 +77,9 @@ function browserSync() {
                 'color:' + config.browserSync.notify.color
             ]
         }
+    } else {
+        options.notify = false;
     }
-}
 
-bs.init(options);
+    bs.init(options);
 }
