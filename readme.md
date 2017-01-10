@@ -129,7 +129,7 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
 
 ##### output
 
-类型：String 默认值：bundle.js
+类型：String 默认值：入口文件名
 
 产出路径，必须以文件名结尾。
     

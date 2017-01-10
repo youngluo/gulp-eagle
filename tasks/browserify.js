@@ -13,7 +13,7 @@ var gulp = require('gulp'),
 
 Eagle.extend('browserify', function (src, output) {
     var paths = prepGulpPaths(src, output);
-
+   
     new Eagle.Task('browserify', function () {
             var stream = config.js.browserify.watchify.enabled ? watchifyStream : browserifyStream;
 

@@ -9,7 +9,7 @@ Eagle.extend('image', function (src, output, options) {
     var params = Eagle.methods.processParams(src, output, options),
         options = params.options,
         paths = new Eagle.GulpPaths().src(params.src).output(params.output);
-
+   
     new Eagle.Task('image', function () {
             this.log(paths.src, paths.output);
 

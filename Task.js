@@ -62,7 +62,11 @@ Task.prototype.run = function () {
  */
 Task.prototype.watch = function (regex, category) {
     if (regex) {
-        this.watchers.push(regex);
+        if (Array.isArray(regex)) {
+            this.watchers = _.union(this.watchers, regex);
+        } else {
+            this.watchers.push(regex);
+        }
     }
 
     return this;
