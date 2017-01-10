@@ -55,13 +55,31 @@ function isWatchingBrowserify(tasks) {
 function browserSync() {
     var baseDir = config.browserSync.baseDir,
 
-        options = _.extend({}, config.browserSync.options, {
+        options = _.extend({}, {
             available: true,
             reloadDelay: 0,
             server: {
                 baseDir: baseDir ? path.join(config.buildPath, baseDir) : config.buildPath
             }
-        });
+        }, config.browserSync.options);
 
-    bs.init(options);
+    if (config.browserSync.notify.enabled) {
+        options.notify = {
+            styles: [
+                'margin: 0',
+                'padding: 15px',
+                'position: fixed',
+                'font-size: 12px',
+                'z-index: 999999',
+                'top: 0',
+                'right: 0',
+                'background-color:' + config.browserSync.notify.backgroundColor,
+                'border-bottom-left-radius: 5px',
+                'color:' + config.browserSync.notify.color
+            ]
+        }
+    }
+}
+
+bs.init(options);
 }

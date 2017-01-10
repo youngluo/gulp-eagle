@@ -1,9 +1,7 @@
 var gulp = require('gulp'),
     Eagle = require('../index'),
     _ = require('lodash'),
-
     $ = Eagle.plugins,
-    bs = Eagle.BS,
     config = Eagle.config;
 
 Eagle.extend('script', function (src, output, options) {
@@ -19,8 +17,6 @@ Eagle.extend('script', function (src, output, options) {
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe($.if(config.production, new Eagle.Notification('Script Compressd!')))
-                .on('end', bs.reload)
-
         })
         .watch(paths.src.path)
         .ignore(paths.output.path);
@@ -37,8 +33,6 @@ Eagle.extend('scriptIn', function (src, output) {
                 .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe(new Eagle.Notification('Script Merged!'))
-                .on('end', bs.reload)
-
         })
         .watch(paths.src.path)
         .ignore(paths.output.path);

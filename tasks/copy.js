@@ -1,7 +1,5 @@
 var gulp = require('gulp'),
     Eagle = require('../index'),
-
-    bs = Eagle.BS,
     $ = Eagle.plugins;
 
 Eagle.extend('copy', function (src, output, options) {
@@ -21,7 +19,6 @@ Eagle.extend('copy', function (src, output, options) {
                     dirname: ''
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
-                .on('end', bs.reload)
             );
         })
         .watch(paths.src.path)

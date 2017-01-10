@@ -133,6 +133,11 @@ var config = {
 
         // Server baseDir
         baseDir: '',
+        notify: {
+            enabled: true,
+            backgroundColor: '#339966',
+            color: '#fff'
+        }
     },
 
     cdn: '',

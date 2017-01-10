@@ -3,7 +3,6 @@ var gulp = require('gulp'),
     _ = require('lodash'),
 
     $ = Eagle.plugins,
-    bs = Eagle.BS,
     config = Eagle.config;
 
 Eagle.extend('sass', function (src, output, options) {
@@ -19,7 +18,6 @@ Eagle.extend('sass', function (src, output, options) {
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe(new Eagle.Notification('Sass Compiled!'))
-                .on('end', bs.reload)
         })
         .watch(paths.src.path)
         .ignore(paths.output.path);
@@ -36,7 +34,6 @@ Eagle.extend('sassIn', function (src, output) {
                 .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe(new Eagle.Notification('Sass Merged!'))
-                .on('end', bs.reload)
         })
         .watch(paths.src.path)
         .ignore(paths.output.path);
@@ -53,7 +50,6 @@ function gulpTask(paths, options) {
         .pipe($.sass(config.css.sass.pluginOptions))
         .on('error', function (e) {
             new Eagle.Notification().error(e, 'Sass Compile Failed');
-
             this.emit('end');
         })
         .pipe($.if(config.css.autoprefix.enabled, $.autoprefixer(config.css.autoprefix.options)))

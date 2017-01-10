@@ -8,12 +8,11 @@ var gulp = require('gulp'),
 
     bundle,
     $ = Eagle.plugins,
-    bs = Eagle.BS,
     config = Eagle.config;
 
 Eagle.extend('browserify', function (src, output) {
     var paths = prepGulpPaths(src, output);
-   
+
     new Eagle.Task('browserify', function () {
             var stream = config.js.browserify.watchify.enabled ? watchifyStream : browserifyStream;
 
@@ -37,7 +36,6 @@ Eagle.extend('browserify', function (src, output) {
                     .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
                     .pipe(gulp.dest(paths.output.baseDir))
                     .pipe(new Eagle.Notification('Browserify Compiled!'))
-                    .on('end', bs.reload)
                 );
             }.bind(this);
 

@@ -3,7 +3,6 @@ var gulp = require('gulp'),
     _ = require('lodash'),
 
     $ = Eagle.plugins,
-    bs = Eagle.BS,
     config = Eagle.config;
 
 Eagle.extend('html', function (src, output, options) {
@@ -25,7 +24,6 @@ Eagle.extend('html', function (src, output, options) {
                     dirname: ''
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
-                .on('end', bs.reload)
             );
         })
         .watch(paths.src.path)

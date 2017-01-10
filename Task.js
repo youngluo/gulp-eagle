@@ -50,7 +50,8 @@ Task.prototype.register = function () {
  * Execute the task definition.
  */
 Task.prototype.run = function () {
-    return this.definition();
+    return this.definition()
+        .on('finish', Eagle.BS.reload);
 };
 
 /**

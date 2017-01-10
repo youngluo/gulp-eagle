@@ -3,7 +3,6 @@ var gulp = require('gulp'),
     _ = require('lodash'),
 
     $ = Eagle.plugins,
-    bs = Eagle.BS,
     config = Eagle.config;
 
 Eagle.extend('style', function (src, output, options) {
@@ -19,7 +18,6 @@ Eagle.extend('style', function (src, output, options) {
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe($.if(config.production, new Eagle.Notification('Style Compressd!')))
-                .on('end', bs.reload)
         })
         .watch(paths.src.path)
         .ignore(paths.output.path);
@@ -36,7 +34,6 @@ Eagle.extend('styleIn', function (src, output) {
                 .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
                 .pipe(gulp.dest(paths.output.baseDir))
                 .pipe(new Eagle.Notification('Style Merged!'))
-                .on('end', bs.reload)
         })
         .watch(paths.src.path)
         .ignore(paths.output.path);
