@@ -5,46 +5,40 @@ var gulp = require('gulp'),
     $ = Eagle.plugins,
     config = Eagle.config;
 
-Eagle.extend('style', function (src, output, options) {
-    var params = Eagle.methods.processParams(src, output, options),
-        options = params.options,
-        paths = new Eagle.GulpPaths().src(params.src).output(params.output);
+Eagle.extend('style', function (src, output, removePath) {
+    var paths = new Eagle.GulpPaths().src(src).output(output);
+
+    removePath = typeof removePath === 'boolean' ? removePath : config.removePath;
 
     new Eagle.Task('style', function () {
-            return gulpTask.call(this, paths, options)
+            return gulpTask.call(this, paths)
                 .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
-                .pipe($.if(options.removePath, $.rename({
+                .pipe($.if(removePath, $.rename({
                     dirname: ''
                 })))
                 .pipe(gulp.dest(paths.output.baseDir))
-                .pipe($.if(config.production, new Eagle.Notification('Style Compressd!')))
         })
         .watch(paths.src.path)
         .ignore(paths.output.path);
 });
 
 Eagle.extend('styleIn', function (src, output) {
-    var params = Eagle.methods.processParams(src, output),
-        options = params.options,
-        paths = new Eagle.GulpPaths().src(params.src).output(params.output);
+    var paths = new Eagle.GulpPaths().src(src).output(output);
 
     new Eagle.Task('styleIn', function () {
-            return gulpTask.call(this, paths, options)
+            return gulpTask.call(this, paths)
                 .pipe($.concat(paths.output.name))
                 .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
                 .pipe(gulp.dest(paths.output.baseDir))
-                .pipe(new Eagle.Notification('Style Merged!'))
         })
         .watch(paths.src.path)
         .ignore(paths.output.path);
 });
 
-function gulpTask(paths, options) {
+function gulpTask(paths) {
     this.log(paths.src, paths.output);
 
-    return gulp.src(paths.src.path, {
-            base: options.base
-        })
+    return gulp.src(paths.src.path)
         .pipe($.if(config.sourcemaps, $.sourcemaps.init()))
         .pipe($.if(config.css.autoprefix.enabled, $.autoprefixer(config.css.autoprefix.options)))
         .pipe($.if(config.production, $.cssnano(config.css.cssnano.pluginOptions)))

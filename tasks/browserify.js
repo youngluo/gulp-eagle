@@ -5,7 +5,6 @@ var gulp = require('gulp'),
     Eagle = require('../index'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
-
     bundle,
     $ = Eagle.plugins,
     config = Eagle.config;
@@ -35,7 +34,6 @@ Eagle.extend('browserify', function (src, output) {
                     .pipe($.if(config.production, $.uglify()))
                     .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
                     .pipe(gulp.dest(paths.output.baseDir))
-                    .pipe(new Eagle.Notification('Browserify Compiled!'))
                 );
             }.bind(this);
 

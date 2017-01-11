@@ -6,11 +6,16 @@ var fs = require('fs'),
     config = Eagle.config;
 
 gulp.task('pre-version', function () {
+    var src = config.buildPath + '/**/*.{' + config.version.type.join(',') + '}',
 
-    var src = config.buildPath + '/**/*.{' + config.version.join(',') + '}';
+        ignoreFile = config.version.ignore.map(function (file) {
+            return '!' + config.buildPath + '/**/' + file;
+        });
+
+    ignoreFile.unshift(src);
 
     return (
-        gulp.src(src, {
+        gulp.src(ignoreFile, {
             base: config.buildPath
         })
         .pipe($.rev())

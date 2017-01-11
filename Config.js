@@ -144,7 +144,11 @@ var config = {
 
     removePath: true,
 
-    version: ['js', 'css', 'png', 'gif', 'jpg', 'jpeg']
+    version: {
+        enabled: true,
+        type: ['js', 'css', 'png', 'gif', 'jpg', 'jpeg'],
+        ignore: []
+    }
 };
 
 module.exports = config;

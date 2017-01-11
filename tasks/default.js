@@ -10,7 +10,7 @@ gulp.task('default', function (cb) {
         return task.name;
     });
 
-    if (config.production) {
+    if (config.version.enabled && config.production) {
         tasks.push('version');
     }
 

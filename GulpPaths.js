@@ -86,6 +86,7 @@ GulpPaths.prototype.changeExtension = function (path, newExtension) {
  * @return {string|Array}
  */
 GulpPaths.prototype.prefix = function (path, prefix) {
+    if (!path) return prefix;
     if (!prefix) return path;
 
     var prefixOne = function (path) {
