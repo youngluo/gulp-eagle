@@ -6,7 +6,7 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
 
 ## 2. 安装
 
-	npm install --save-dev gulp－eagle
+	npm install --save-dev gulp-eagle
 
 ## 3. 使用
 
