@@ -25,7 +25,7 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
     
 ## 5. API
 
-#### 5.1 sass(src[, output, options])
+#### 5.1 sass(src[, output, removePath])
 
 将 sass 文件编译成 css 文件。
 
@@ -43,22 +43,7 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
 
 产出路径。
 
-##### options
-
-类型：Object
-
-##### options.base
-
-类型：String 默认值：将会加在 glob 之前（详情见[glob2base](https://github.com/contra/glob2base)）
-
-假设在一个路径为 src/scss/aaa 的目录中，有一个文件叫 aaa.scss ：
-	
-	// 匹配 'src/scss/aaa/aaa.scss' 并且将 base 解析为 src/scss/ 最终产出到 'build/aaa/aaa.css'
-	mix.sass('./src/scss/**/*.scss')
-	
-	// 产出到 'build/scss/aaa/aaa.css'
-	mix.sass('./src/scss/**/*.scss', { base: 'src' }) 
-##### options.removePath
+##### removePath
 
 类型：Boolean 默认值：true
 
@@ -85,9 +70,9 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
 
 产出路径，必须以文件名结尾，如`css/app.css`。
 
-#### 5.3 style(src[, output, options])
+#### 5.3 style(src[, output, removePath])
 
-产出原生 css 文件，参数详情见 [5.1](#user-content-51-sasssrc-output-options)。
+产出原生 css 文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
 
 	mix.style('./src/css/*.css', 'css')
 	
@@ -100,9 +85,9 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
 		'./src/bbb/bbb.css'
 	], 'css/app.css')
 	
-#### 5.5 script(src[, output, options])
+#### 5.5 script(src[, output, removePath])
 
-产出 js 文件，参数详情见 [5.1](#user-content-51-sasssrc-output-options)。
+产出 js 文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
 
 	mix.script('./src/js/*.js', 'js')
 	
@@ -133,21 +118,21 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
 
 产出路径，必须以文件名结尾。
     
-#### 5.8 image(src[, output, options])
+#### 5.8 image(src[, output, removePath])
 
-产出图片文件，参数详情见 [5.1](#user-content-51-sasssrc-output-options)。
+产出图片文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
 
 	mix.image('./src/images', 'images', {removePath: false})
     
-#### 5.9 html(src[, output, options])
+#### 5.9 html(src[, output, removePath])
 
-产出html文件，参数详情见 [5.1](#user-content-51-sasssrc-output-options)。
+产出html文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
 
 	mix.html('./src/**/*.html')
     
-#### 5.10 copy(src[, output, options])
+#### 5.10 copy(src[, output, removePath])
 
-复制文件，参数详情见 [5.1](#user-content-51-sasssrc-output-options)。
+复制文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
 
 	mix.copy('./src/assets/fonts/**', 'assets/fonts')
     
@@ -162,7 +147,7 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
 	mix.clean()
     
 
-> **注意：src默认是从配置文件指定的产出文件夹（build）中查找，如需从当前项目根目录下查找，则在路径前加上`.／`；output默认输出在build文件夹中。**
+> **注意：src 默认是从配置文件指定的产出文件夹（build）中查找，如需从当前项目根目录下查找，则在路径前加上`.／`；output 默认输出在 build 文件夹中。**
 	
 ## 6. 配置文件介绍
 
