@@ -58,7 +58,7 @@ function browserSync() {
             available: true,
             reloadDelay: 0,
             server: {
-                baseDir: baseDir ? path.join(config.buildPath, baseDir) : config.buildPath
+                baseDir: baseDir ? baseDir : config.buildPath
             }
         }, config.browserSync.options);
 
