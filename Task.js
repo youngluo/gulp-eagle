@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 var id = 0,
-    Eagle;
+  Eagle;
 
 /**
  * Create a Task constructor.
@@ -10,26 +10,26 @@ var id = 0,
  * @param {Function} description detailed task
  */
 var Task = function (name, description) {
-    this.id = id++;
-    this.name = name;
-    this.watchers = [];
+  this.id = id++;
+  this.name = name;
+  this.watchers = [];
 
-    if (description) {
-        this.definition = description;
+  if (description) {
+    this.definition = description;
 
-        this.register();
+    this.register();
 
-        return this;
-    }
+    return this;
+  }
 };
 
 Task.find = function (name) {
-    var tasks = _.filter(Eagle.tasks, function (task) {
-        return task.name == name;
-    });
+  var tasks = _.filter(Eagle.tasks, function (task) {
+    return task.name == name;
+  });
 
-    return tasks[Eagle.config.activeTasks[name]];
-}
+  return tasks[Eagle.config.activeTasks[name]];
+};
 
 /**
  * Set the task to be called, when firing `Gulp`.
@@ -37,21 +37,21 @@ Task.find = function (name) {
  * @return {Task}
  */
 Task.prototype.register = function () {
-    Eagle.tasks.push(this);
+  Eagle.tasks.push(this);
 
-    // Make a single task can be triggered multiple times.
-    Eagle.config.activeTasks = Eagle.config.activeTasks || {};
-    Eagle.config.activeTasks[this.name] = 0;
+  // Make a single task can be triggered multiple times.
+  Eagle.config.activeTasks = Eagle.config.activeTasks || {};
+  Eagle.config.activeTasks[this.name] = 0;
 
-    return this;
+  return this;
 };
 
 /**
  * Execute the task definition.
  */
 Task.prototype.run = function () {
-    return this.definition()
-        .on('finish', Eagle.BS.reload);
+  return this.definition()
+    .on('finish', Eagle.BS.reload);
 };
 
 /**
@@ -61,16 +61,16 @@ Task.prototype.run = function () {
  * @param  {string|null} category
  * @return {Task}
  */
-Task.prototype.watch = function (regex, category) {
-    if (regex) {
-        if (Array.isArray(regex)) {
-            this.watchers = _.union(this.watchers, regex);
-        } else {
-            this.watchers.push(regex);
-        }
+Task.prototype.watch = function (regex) {
+  if (regex) {
+    if (Array.isArray(regex)) {
+      this.watchers = _.union(this.watchers, regex);
+    } else {
+      this.watchers.push(regex);
     }
+  }
 
-    return this;
+  return this;
 };
 
 /**
@@ -80,9 +80,9 @@ Task.prototype.watch = function (regex, category) {
  * @return {Task}
  */
 Task.prototype.ignore = function (path) {
-    this.watchers.push(('!./' + path).replace('././', './'));
+  this.watchers.push(('!./' + path).replace('././', './'));
 
-    return this;
+  return this;
 };
 
 /**
@@ -92,22 +92,22 @@ Task.prototype.ignore = function (path) {
  * @param {string|null}  output
  */
 Task.prototype.log = function (src, output) {
-    var task = this.name.substr(0, 1).toUpperCase() + this.name.substr(1);
+  var task = this.name.substr(0, 1).toUpperCase() + this.name.substr(1);
 
+  Eagle.Log
+    .heading('Fetching ' + task + ' Source Files...')
+    .files(src.path ? src.path : src, true);
+
+  if (output) {
     Eagle.Log
-        .heading("Fetching " + task + " Source Files...")
-        .files(src.path ? src.path : src, true);
-
-    if (output) {
-        Eagle.Log
-            .heading('Saving To...')
-            .files(output.path ? output.path : output);
-    }
+      .heading('Saving To...')
+      .files(output.path ? output.path : output);
+  }
 };
 
 module.exports = function (eagle) {
-    // Make Eagle available throughout incoming the Eagle class.
-    Eagle = eagle;
+  // Make Eagle available throughout incoming the Eagle class.
+  Eagle = eagle;
 
-    return Task;
+  return Task;
 };

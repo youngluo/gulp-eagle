@@ -1,0 +1,37 @@
+{
+  "env": {
+    "node": true,
+    "commonjs": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "no-console": "off",
+    "semi": "error",
+    "indent": [
+      "error",
+      2
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "space-before-blocks": "error",
+    "space-before-function-paren": "error",
+    "space-in-parens": [
+      "error",
+      "never"
+    ],
+    "space-unary-ops": "error",
+    "space-infix-ops": "error",
+    "spaced-comment": "error",
+    "max-len": [
+      "error",
+      120
+    ],
+    "array-bracket-spacing": [
+      "error",
+      "never"
+    ],
+    "block-spacing": "error"
+  }
+}

@@ -1,16 +1,16 @@
 var fs = require('fs'),
-    gulp = require('gulp'),
-    _ = require('lodash'),
-    gutils = require('gulp-util');
+  gulp = require('gulp'),
+  _ = require('lodash'),
+  gutils = require('gulp-util');
 
 var Eagle = function (callback) {
 
-    // Loading all default tasks.
-    require('require-dir')('./tasks');
+  // Loading all default tasks.
+  require('require-dir')('./tasks');
 
-    callback(Eagle.mixins);
+  callback(Eagle.mixins);
 
-    createGulpTasks.call(Eagle);
+  createGulpTasks.call(Eagle);
 }
 
 Eagle.mixins = {};
@@ -39,38 +39,38 @@ Eagle.tasks = Eagle.config.tasks;
  */
 
 Eagle.extend = function (name, callback) {
-    this.mixins[name] = function () {
-        callback.apply(this, arguments);
+  this.mixins[name] = function () {
+    callback.apply(this, arguments);
 
-        return this.mixins;
-    }.bind(this);
+    return this.mixins;
+  }.bind(this);
 };
 
 
 function createGulpTasks() {
-    var tasks = this.tasks;
+  var tasks = this.tasks;
 
-    tasks.forEach(function (task) {
-        if (_.includes(gulp.tasks, task.name)) return;
+  tasks.forEach(function (task) {
+    if (_.includes(gulp.tasks, task.name)) return;
 
-        gulp.task(task.name, function () {
+    gulp.task(task.name, function () {
 
-            if (_.intersection(gutils.env._, [task.name, 'watch']).length) {
-                return _.filter(tasks, {
-                        name: task.name
-                    })
-                    .forEach(function (task) {
-                        task.run();
-                    });
-            }
+      if (_.intersection(gutils.env._, [task.name, 'watch']).length) {
+        return _.filter(tasks, {
+          name: task.name
+        })
+          .forEach(function (task) {
+            task.run();
+          });
+      }
 
-            var gulpTask = Eagle.Task.find(task.name).run();
+      var gulpTask = Eagle.Task.find(task.name).run();
 
-            Eagle.config.activeTasks[task.name]++;
+      Eagle.config.activeTasks[task.name]++;
 
-            return gulpTask;
-        });
+      return gulpTask;
     });
+  });
 };
 
 module.exports = Eagle;
