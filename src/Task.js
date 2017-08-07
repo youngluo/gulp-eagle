@@ -1,50 +1,36 @@
-var _ = require('lodash');
+const { _, Eagle } = global;
+const bs = require('browser-sync').create();
 
-var id = 0,
-  Eagle;
+let id = 0;
 
-/**
- * Create a Task constructor.
- *
- * @param {string}   name
- * @param {Function} description detailed task
- */
-var Task = function (name, description) {
-  this.id = id++;
-  this.name = name;
-  this.watchers = [];
+class Task {
+  constructor(name, gulpTask) {
+    this.id = id++;
+    this.name = name;
+    this.watchers = [];
+    this.isComplete = false;
 
-  if (description) {
-    this.definition = description;
+    if (!this.gulpTask) {
+      this.gulpTask = gulpTask;
+    }
 
-    this.register();
+    return this.register();
+  }
+
+  register() {
+    Eagle.tasks.push(this);
 
     return this;
   }
-};
 
-Task.find = function (name) {
-  var tasks = _.filter(Eagle.tasks, function (task) {
-    return task.name == name;
-  });
+  find() {
+    var tasks = _.filter(Eagle.tasks, function (task) {
+      return task.name == name;
+    });
 
-  return tasks[Eagle.config.activeTasks[name]];
-};
-
-/**
- * Set the task to be called, when firing `Gulp`.
- *
- * @return {Task}
- */
-Task.prototype.register = function () {
-  Eagle.tasks.push(this);
-
-  // Make a single task can be triggered multiple times.
-  Eagle.config.activeTasks = Eagle.config.activeTasks || {};
-  Eagle.config.activeTasks[this.name] = 0;
-
-  return this;
-};
+    return tasks[Eagle.config.activeTasks[name]];
+  }
+}
 
 /**
  * Execute the task definition.
@@ -104,7 +90,6 @@ Task.prototype.log = function (src, output) {
       .files(output.path ? output.path : output);
   }
 };
-
 module.exports = function (eagle) {
   // Make Eagle available throughout incoming the Eagle class.
   Eagle = eagle;

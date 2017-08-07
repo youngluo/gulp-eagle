@@ -3,10 +3,15 @@
     "node": true,
     "commonjs": true
   },
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
   "extends": "eslint:recommended",
   "rules": {
+    "camelcase": "error",
     "no-console": "off",
     "semi": "error",
+    "brace-style": "error",
     "indent": [
       "error",
       2
@@ -16,11 +21,7 @@
       "single"
     ],
     "space-before-blocks": "error",
-    "space-before-function-paren": "error",
-    "space-in-parens": [
-      "error",
-      "never"
-    ],
+    "space-in-parens": "error",
     "space-unary-ops": "error",
     "space-infix-ops": "error",
     "spaced-comment": "error",
@@ -32,6 +33,12 @@
       "error",
       "never"
     ],
-    "block-spacing": "error"
+    "block-spacing": "error",
+    "dot-location": [
+      "error",
+      "property"
+    ],
+    "dot-notation": "error",
+    "eqeqeq": "error"
   }
 }
