@@ -2,11 +2,11 @@ global.gulp = require('gulp');
 global.plugins = require('gulp-load-plugins')();
 global._ = require('lodash');
 
+const Builder = require('./utils/GulpBuilder');
+
 function Eagle(callback) {
   // Loading all default tasks.
-  require('require-dir')('./temp');
-
-  const Builder = require('./utils/GulpBuilder');
+  require('require-dir')('./tasks');
 
   callback(Eagle.mixins);
 

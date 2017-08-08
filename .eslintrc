@@ -8,13 +8,15 @@
   },
   "extends": "eslint:recommended",
   "rules": {
-    "camelcase": "error",
     "no-console": "off",
     "semi": "error",
     "brace-style": "error",
     "indent": [
       "error",
-      2
+      2,
+      {
+        "SwitchCase": 1
+      }
     ],
     "quotes": [
       "error",

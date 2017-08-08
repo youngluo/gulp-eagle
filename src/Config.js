@@ -1,32 +1,16 @@
-var p = require('path'),
-  gutils = require('gulp-util'),
-  production = gutils.env.prod || false;
+const gutils = require('gulp-util');
+const { imagemin } = global.plugins;
+const production = gutils.env.prod || false;
 
-var config = {
-
-  /**
-   * The tasks array stores all tasks that should be executed each
-   * time you trigger Gulp from the command line. Generally you
-   * won't need to modify this but it's an option if needed.
-   */
-
-  tasks: [],
-
-  production: production,
+const config = {
+  production,
 
   /**
    * After packaging the output path.
    */
-
-  buildPath: 'build',
+  buildPath: 'dist',
 
   sourcemaps: !production,
-
-  /**
-   * You likely won't need to modify this object. That said, should
-   * you need to, these settings are exclusive to the watch task.
-   * They set the limit and timeout for running batch-updates.
-   */
 
   batchOptions: {
     // https://github.com/floatdrop/gulp-batch#batchoptions-callback-errorhandler
@@ -55,6 +39,7 @@ var config = {
   },
 
   css: {
+    outputFolder: 'css',
 
     autoprefix: {
       enabled: true,
@@ -66,66 +51,47 @@ var config = {
       }
     },
 
-    cssnano: {
-      // http://cssnano.co/options
-      pluginOptions: {
-        safe: true
-      }
-    },
-
     sass: {
       // https://github.com/sass/node-sass#options
       pluginOptions: {
-        outputStyle: production ? 'compressed' : 'expanded',
+        outputStyle: 'expanded',
         precision: 10
-      }
-    }
-
-  },
-
-  js: {
-
-    babel: {
-      enabled: false,
-      // https://www.npmjs.com/package/gulp-babel#babel-options
-      options: {
-        presets: ['es2015']
       }
     },
 
-    browserify: {
-      // https://www.npmjs.com/package/browserify#usage
-      options: {},
-
-      plugins: [],
-
-      externals: [],
-
-      transformers: [
-        {
-          name: 'babelify',
-
-          // https://www.npmjs.com/package/gulp-babel#babel-options
-          options: {
-            presets: ['es2015']
-          }
-        }
-      ],
-
-      watchify: {
-        enabled: false,
-
-        // https://www.npmjs.com/package/watchify#usage
-        options: {}
-      }
+    minifier: {
+      // https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-api
+      pluginOptions: {}
     }
-
   },
 
-  //Browser refresh automatically.
+  js: {
+    outputFolder: 'js',
 
+    uglify: {
+      options: {
+        compress: {
+          drop_console: production
+        }
+      }
+    }
+  },
+
+  image: {
+    // https://www.npmjs.com/package/gulp-imagemin
+    plugins: [
+      imagemin.gifsicle({ interlaced: true }),
+      imagemin.jpegtran({ progressive: true }),
+      imagemin.optipng({ optimizationLevel: 5 }),
+      imagemin.svgo({ plugins: [{ removeViewBox: true }] })
+    ],
+    options: {
+      verbose: true
+    }
+  },
+
+  // Browser refresh automatically.
   browserSync: {
-    enabled: true,
     options: {
       port: 8080,
       startPath: 'index.html'
@@ -140,15 +106,9 @@ var config = {
     }
   },
 
-  cdn: '',
+  cdn: false,
 
   removePath: true,
-
-  version: {
-    enabled: true,
-    type: ['js', 'css', 'png', 'gif', 'jpg', 'jpeg'],
-    ignore: []
-  }
 };
 
 module.exports = config;

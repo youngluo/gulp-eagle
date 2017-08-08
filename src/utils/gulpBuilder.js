@@ -1,10 +1,10 @@
 const { gulp, plugins, Eagle, _ } = global;
-const { includes, intersection, filter } = _;
+const { includes, intersection, filter, find } = _;
 const { env } = plugins.util;
 
 class GulpBuilder {
-  static create(task) {
-    const { name } = task.name;
+  create(task) {
+    const { name } = task;
 
     if (includes(gulp.tasks, name)) return;
 
@@ -16,9 +16,7 @@ class GulpBuilder {
           });
       }
 
-      return Eagle.Task
-        .find({ name, isComplete: false })
-        .run();
+      return find(Eagle.tasks, { name, isComplete: false }).run();
     });
   }
 
@@ -27,4 +25,4 @@ class GulpBuilder {
   }
 }
 
-module.exports = GulpBuilder;
+module.exports = new GulpBuilder;
