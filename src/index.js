@@ -18,7 +18,7 @@ function Eagle(callback) {
 /**
 * Register a new task with Eagle.
 *
-* @param {string} gulp-eagle task name
+* @param {string} name
 * @param {Function} callback
 */
 Eagle.extend = function (name, callback) {

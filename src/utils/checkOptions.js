@@ -1,10 +1,10 @@
 const { config } = global.Eagle;
 
-let defaultOptions = {
-  removePath: config.removePath
-};
-
 function checkOptions(options = {}) {
+  let defaultOptions = {
+    removePath: config.removePath
+  };
+
   return Object.assign({}, defaultOptions, options);
 }
 

@@ -6,7 +6,9 @@ let { Eagle } = global;
 Eagle.mixins = {};
 
 /**
- * The gulp-eagle configuration object.
+ * The main Elixir configuration object.
+ *
+ * @type {object}
  */
 Eagle.config = require('../config');
 

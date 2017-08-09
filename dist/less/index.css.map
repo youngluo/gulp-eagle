@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA;EACE,WAAW;EACX,kCAA0B;EAA1B,8BAA0B;EAA1B,0BAA0B;CAC3B","file":"index.css","sourcesContent":["h5 {\n  padding: 0;\n  transform: translate(50%);\n}\n"]}

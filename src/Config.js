@@ -57,6 +57,11 @@ const config = {
       }
     },
 
+    less: {
+      // https://github.com/plus3network/gulp-less#options
+      pluginOptions: {}
+    },
+
     minifier: {
       // https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-api
       pluginOptions: {}
