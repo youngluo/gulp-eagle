@@ -1,7 +1,7 @@
 const p = require('path');
 const parsePath = require('parse-filepath');
-const { util } = global.plugins;
 const { config } = global.Eagle;
+const { util } = global.plugins;
 
 class GulpPaths {
   /**
@@ -10,37 +10,15 @@ class GulpPaths {
    * @param  {string|Array} src
    */
   src(src) {
-    var self = this,
-      prefix = config.buildPath;
+    this.src = Array.isArray(src) ? { path: src } : this.parse(src);
 
-    src = this.prefix(src, prefix);
-
-    if (Array.isArray(src)) {
-      src = src.map(function (path) {
-        if (self.parse(path).isDir) {
-          path += '/**/*';
-        }
-
-        return path;
-      });
-
-      self.src = {
-        path: src
-      };
-    } else {
-      self.src = self.parse(src);
-      self.src.isDir && (self.src.path += '/**/*');
-    }
-
-    return self;
+    return this;
   }
 
   /**
    * Set the Gulp output path.
    *
-   * @param  {string}      output
-   * @param  {string|null} defaultName
-   * @return {GulpPaths}
+   * @param  {string} output
    */
   output(output, defaultName) {
     output = output ? p.join(config.buildPath, output) : config.buildPath;
@@ -48,10 +26,8 @@ class GulpPaths {
     this.output = this.parse(output);
 
     if (!this.output.name && defaultName) {
-      // We'll check to see if the provided src is not
-      // an array. If so, we'll use that single file
-      // name as the output name. But we must also
-      // change the extension (.scss -> .css).
+      // See if we can use the name of the input file for the output name,
+      // just as long as we substitute the ext name (.sass => .css).
       if (!Array.isArray(this.src.path) && this.src.name.indexOf('*') === -1) {
         defaultName = this.changeExtension(
           this.src.name,
@@ -65,50 +41,8 @@ class GulpPaths {
     return this;
   }
 
-  /**
-   * Change the file extension for a path.
-   *
-   * @param  {string} path
-   * @param  {string} newExtension
-   * @return {string}
-   */
   changeExtension(path, newExtension) {
     return util.replaceExtension(path, newExtension);
-  }
-
-  /**
-   * Apply a path prefix to the path(s).
-   *
-   * @param  {string|Array} path
-   * @param  {string|null}  prefix
-   * @return {string|Array}
-   */
-  prefix(path, prefix) {
-    if (!path) return prefix;
-    if (!prefix) return path;
-
-    var prefixOne = function (path) {
-
-      if (path.indexOf('./') === 0) {
-        return path.substring(2);
-      }
-
-      // If path starts with "!" we need to negate him
-      if (path.indexOf('!') === 0) {
-        path = '!' + p.join(prefix, path.substring(1));
-      } else {
-        path = p.join(prefix, path);
-      }
-
-      return path.replace(/\/\//g, '/')
-        .replace(p.join(prefix, prefix), prefix);
-    };
-
-    if (Array.isArray(path)) {
-      return path.map(prefixOne);
-    }
-
-    return prefixOne(path);
   }
 
   /**
@@ -118,13 +52,13 @@ class GulpPaths {
    * @return {object}
    */
   parse(path) {
-    var segments = parsePath(path);
+    const segments = parsePath(path);
 
     return {
       path: path,
       name: segments.extname ? segments.basename : '',
       extension: segments.extname,
-      isDir: !(segments.extname),
+      isDir: !segments.extname,
       baseDir: segments.extname ? segments.dirname : p.join(segments.dirname, segments.basename)
     };
   }

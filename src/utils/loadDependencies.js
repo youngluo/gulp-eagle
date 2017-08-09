@@ -30,6 +30,8 @@ Eagle.tasks = [];
 /**
  * Each Gulp task is stored as a Task instance.
  */
-Eagle.Task = require('./Task');
+Eagle.Task = require('../tasks/Task');
 
 Eagle.checkOptions = require('./checkOptions');
+
+Eagle.Notification = require('./Notification');

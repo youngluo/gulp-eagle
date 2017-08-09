@@ -39,8 +39,6 @@ const config = {
   },
 
   css: {
-    outputFolder: 'css',
-
     autoprefix: {
       enabled: true,
 
@@ -66,8 +64,6 @@ const config = {
   },
 
   js: {
-    outputFolder: 'js',
-
     uglify: {
       options: {
         compress: {
@@ -105,6 +101,8 @@ const config = {
       color: '#fff'
     }
   },
+
+  notifications: true,
 
   cdn: false,
 
