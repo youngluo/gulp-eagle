@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.css","demo.css"],"names":[],"mappings":"AAAA;EACE,UAAU;EACV,WAAW;CACZ;;AAED;;EAEE,aAAa;EACb,oBAAQ;EAAR,YAAQ;EAAR,QAAQ;CACT;;ACTD;EACE,iBAAiB;CAClB","file":"app.css","sourcesContent":["* {\n  margin: 0;\n  padding: 0;\n}\n\nhtml,\nbody {\n  height: 100%;\n  flex: 1;\n}\n","h5 {\n  margin-top: 10px;\n}\n"]}
