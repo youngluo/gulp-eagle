@@ -13,5 +13,6 @@ Eagle(mix => {
     .style('./test-app/*/index.css')
     .styleIn('./test-app/style/*.css', 'style/style.css')
     .babel('./test-app/babel/index.js', 'babel')
-    .babelIn('./test-app/babel/*.js', 'babel');
+    .babelIn('./test-app/babel/*.js', 'babel')
+    .copy('./test-app/js/index.js', 'copy/copy.js');
 });

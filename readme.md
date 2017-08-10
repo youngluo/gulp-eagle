@@ -99,24 +99,6 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
 		'./src/aaa/aaa.js',
 		'./src/bbb/bbb.js'
 	], 'css/app.js')
-	
-#### 5.7 browserify(src[, output])
-
-可以让你使用类似于 node 的 require() 的方式来组织浏览器端的 javascript 代码，通过预编译让前端 javascript 可以直接使用 node npm 安装的一些库。
-
-	mix.browserify('./src/app.js')
-
-##### src
-
-类型：String
-
-使用 Browserify 方式组织代码的入口 javascript 文件。
-
-##### output
-
-类型：String 默认值：入口文件名
-
-产出路径，必须以文件名结尾。
     
 #### 5.8 image(src[, output, removePath])
 
@@ -135,19 +117,6 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
 复制文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
 
 	mix.copy('./src/assets/fonts/**', 'assets/fonts')
-    
-#### 5.11 clean(src)
-
-清除文件。
-
-##### src
-
-类型： String 或 Array 默认值：配置文件中指定的产出文件夹（build）
-
-	mix.clean()
-    
-
-> **注意：src 默认是从配置文件指定的产出文件夹（build）中查找，如需从当前项目根目录下查找，则在路径前加上`.／`；output 默认输出在 build 文件夹中。**
 	
 ## 6. 配置文件介绍
 
