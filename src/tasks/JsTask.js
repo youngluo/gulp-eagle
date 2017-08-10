@@ -1,7 +1,7 @@
 const { Task, config } = global.Eagle;
 const { gulp, plugins: $ } = global;
 
-class CssTask extends Task {
+class JsTask extends Task {
   /**
    *
    * @param {string} name
@@ -12,7 +12,7 @@ class CssTask extends Task {
   constructor(name, paths, options, isConcat) {
     super(name, null, paths);
     this.options = options;
-    this.isConcat = isConcat || false;
+    this.isConcat = isConcat;
   }
 
   gulpTask() {
@@ -22,7 +22,6 @@ class CssTask extends Task {
         .pipe(this.initSourceMaps())
         .pipe(this.compile())
         .on('error', this.onError())
-        .pipe(this.autoPrefix())
         .pipe($.if(this.isConcat, this.concat()))
         .pipe(this.minify())
         .on('error', this.onError())
@@ -40,16 +39,8 @@ class CssTask extends Task {
       return this.stream();
     }
 
-    return plugin(config.css[name].pluginOptions);
-  }
-
-  autoPrefix() {
-    if (!config.css.autoprefix.enabled) {
-      return this.stream();
-    }
-
-    return $.autoprefixer(config.css.autoprefix.options);
+    return plugin(config.js[name].pluginOptions);
   }
 }
 
-module.exports = CssTask;
+module.exports = JsTask;

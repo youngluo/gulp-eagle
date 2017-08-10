@@ -69,6 +69,11 @@ const config = {
   },
 
   js: {
+    babel: {
+      // https://babeljs.io/docs/usage/api/#options
+      pluginOptions: {}
+    },
+
     uglify: {
       options: {
         compress: {

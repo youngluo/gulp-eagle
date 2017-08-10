@@ -144,7 +144,7 @@ class Task {
         );
       }
 
-      this.emit('end');
+      this.emit && this.emit('end');
     };
   }
 

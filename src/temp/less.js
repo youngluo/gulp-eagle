@@ -7,7 +7,7 @@ Eagle.extend('less', function (src, output, options) {
 });
 
 Eagle.extend('lessIn', function (src, output, options) {
-  new CssTask('less', getPaths(src, output), checkOptions(options), true);
+  new CssTask('lessIn', getPaths(src, output), checkOptions(options), true);
 });
 
 function getPaths(src, output) {
