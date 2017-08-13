@@ -1,26 +1,27 @@
 const map = require('vinyl-map2');
 const CleanCSS = require('clean-css');
 const { log, config } = global.Eagle;
-const { plugins } = global;
+const { plugins: $ } = global;
 
 /**
  * Minify the src files.
 */
-function minifier(output) {
-  switch (output.extension) {
-    case '.css':
-      return minifyCss();
-    case '.js':
-      return minifyJs();
-    case 'jpg':
-    case 'jpeg':
-    case 'png':
-    case 'gif':
-    case 'svg':
-      return minifyImage();
-    default:
-      log.error('Oops, not sure how to compress this type of file.');
+function minifier(output, taskName) {
+  const { extension } = output;
+
+  if (extension === '.css') {
+    return minifyCss();
   }
+
+  if (extension === '.js') {
+    return minifyJs();
+  }
+
+  if (taskName === 'image') {
+    return minifyImage();
+  }
+
+  log.error('Oops, not sure how to compress this type of file.');
 }
 
 /**
@@ -38,15 +39,21 @@ function minifyCss() {
  * Minify js files.
  */
 function minifyJs() {
-  return plugins.uglify(config.js.uglify.options);
+  return $.uglify(config.js.uglify.options);
 }
 
 /**
  * Minify the image files.
  */
 function minifyImage() {
-  const { plugins, options } = config.image;
-  return plugins.imagemin(plugins, options);
+  const { gif, jpg, png, svg } = config.image.options;
+
+  return $.imagemin([
+    $.imagemin.gifsicle(gif),
+    $.imagemin.jpegtran(jpg),
+    $.imagemin.optipng(png),
+    $.imagemin.svgo(svg)
+  ]);
 }
 
 module.exports = minifier;

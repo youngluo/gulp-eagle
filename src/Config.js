@@ -1,5 +1,4 @@
 const gutils = require('gulp-util');
-const { imagemin } = global.plugins;
 const production = gutils.env.prod || false;
 
 const config = {
@@ -39,6 +38,8 @@ const config = {
   },
 
   css: {
+    processCssUrls: true,
+
     autoprefix: {
       enabled: true,
 
@@ -85,14 +86,11 @@ const config = {
 
   image: {
     // https://www.npmjs.com/package/gulp-imagemin
-    plugins: [
-      imagemin.gifsicle({ interlaced: true }),
-      imagemin.jpegtran({ progressive: true }),
-      imagemin.optipng({ optimizationLevel: 5 }),
-      imagemin.svgo({ plugins: [{ removeViewBox: true }] })
-    ],
     options: {
-      verbose: true
+      gif: { interlaced: true },
+      png: { optimizationLevel: 5 },
+      jpg: { progressive: true },
+      svg: { plugins: [{ removeViewBox: false }] }
     }
   },
 

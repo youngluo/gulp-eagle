@@ -108,7 +108,7 @@ class Task {
       return this.stream();
     }
 
-    return minifier(this.output);
+    return minifier(this.output, this.name);
   }
 
   /**

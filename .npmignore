@@ -1,6 +1,6 @@
 node_modules/
 npm-debug.log
-dist
+dist/
 test-app/
 gulpfile.js
 .editorconfig

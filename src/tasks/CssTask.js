@@ -23,6 +23,7 @@ class CssTask extends Task {
         .pipe(this.compile())
         .on('error', this.onError())
         .pipe(this.autoPrefix())
+        .pipe(this.processUrls())
         .pipe($.if(this.isConcat, this.concat()))
         .pipe(this.minify())
         .on('error', this.onError())
@@ -49,6 +50,17 @@ class CssTask extends Task {
     }
 
     return $.autoprefixer(config.css.autoprefix.options);
+  }
+
+  processUrls() {
+    if (!config.css.processCssUrls) {
+      return this.stream();
+    }
+
+    return $.cssProcessor({
+      dist: config.buildPath,
+      assets: config.buildPath + '/assets'
+    });
   }
 }
 
