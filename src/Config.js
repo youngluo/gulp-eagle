@@ -27,12 +27,11 @@ const config = {
         minifyJS: true
       }
     },
-    include: {
+    hash: {
       enabled: true,
-      // https://www.npmjs.com/package/gulp-file-include#options
+      // https://www.npmjs.com/package/gulp-rev-hash#custom-options
       options: {
-        prefix: '@@',
-        basepath: '@file'
+        assetsDir: ''
       }
     }
   },

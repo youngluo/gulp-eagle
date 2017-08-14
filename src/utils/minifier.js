@@ -7,18 +7,17 @@ const { plugins: $ } = global;
  * Minify the src files.
 */
 function minifier(output, taskName) {
-  const { extension } = output;
-
-  if (extension === '.css') {
-    return minifyCss();
-  }
-
-  if (extension === '.js') {
-    return minifyJs();
-  }
-
   if (taskName === 'image') {
     return minifyImage();
+  }
+
+  switch (output.extension) {
+    case '.css':
+      return minifyCss();
+    case '.js':
+      return minifyJs();
+    case '.html':
+      return minifyHtml();
   }
 
   log.error('Oops, not sure how to compress this type of file.');
@@ -54,6 +53,13 @@ function minifyImage() {
     $.imagemin.optipng(png),
     $.imagemin.svgo(svg)
   ]);
+}
+
+/**
+ * Minify the html files.
+ */
+function minifyHtml() {
+  return $.htmlmin(config.html.compress.options);
 }
 
 module.exports = minifier;
