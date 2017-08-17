@@ -4,7 +4,7 @@ global._ = require('lodash');
 
 function Eagle(callback) {
   // Loading all default tasks.
-  require('require-dir')('./temp');
+  require('require-dir')('./recipes');
 
   const Builder = require('./utils/GulpBuilder');
 

@@ -26,13 +26,6 @@ const config = {
         minifyCSS: true,
         minifyJS: true
       }
-    },
-    hash: {
-      enabled: true,
-      // https://www.npmjs.com/package/gulp-rev-hash#custom-options
-      options: {
-        assetsDir: ''
-      }
     }
   },
 

@@ -11,7 +11,7 @@ Eagle(mix => {
     ], 'sass')
     .less('./test-app/*/index.less')
     .less('./test-app/*/demo.less')
-    .style('./test-app/*/index.css')
+    .style('./test-app/*/index.css','index.min.css')
     .styleIn('./test-app/style/*.css', 'style/style.css')
     .babel('./test-app/babel/index.js', 'babel')
     .babelIn('./test-app/babel/*.js', 'babel')

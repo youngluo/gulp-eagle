@@ -1,12 +1,8 @@
-var gulp = require('gulp'),
-  Eagle = require('../index');
+const { gulp, Eagle } = global;
+const { Task } = Eagle;
 
 Eagle.extend('task', function (name, watcher) {
-  var task = new Eagle.Task('task', function () {
-    return gulp.start(name);
-  });
+  var task = new Task('task', () => gulp.start(name));
 
-  if (watcher) {
-    task.watch(watcher);
-  }
+  watcher && task.watch(watcher);
 });
