@@ -121,8 +121,8 @@ class Task {
   /**
   * Set the destination path.
   */
-  save(gulp) {
-    return gulp.dest(this.output.baseDir);
+  save(gulp, destination = this.output.baseDir) {
+    return gulp.dest(destination);
   }
 
   /**

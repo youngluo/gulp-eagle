@@ -104,7 +104,9 @@ const config = {
 
   notifications: true,
 
-  cdn: false,
+  versionFolder: 'build',
+
+  cdn: '',
 
   removePath: true,
 };

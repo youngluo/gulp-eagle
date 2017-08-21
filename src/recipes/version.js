@@ -1,61 +1,13 @@
-var fs = require('fs'),
-  del = require('del'),
-  gulp = require('gulp'),
-  Eagle = require('../index'),
-  $ = Eagle.plugins,
-  config = Eagle.config;
+const VersionTask = require('../tasks/VersionTask');
+const { Eagle } = global;
+const { GulpPaths, config } = Eagle;
 
-gulp.task('pre-version', function () {
-  var src = config.buildPath + '/**/*.{' + config.version.type.join(',') + '}',
-
-    ignoreFile = config.version.ignore.map(function (file) {
-      return '!' + config.buildPath + '/**/' + file;
-    });
-
-  ignoreFile.unshift(src);
-
-  return (
-    gulp.src(ignoreFile, {
-      base: config.buildPath
-    })
-      .pipe($.rev())
-      .pipe(gulp.dest(config.buildPath))
-      .pipe($.rev.manifest())
-      .pipe(gulp.dest(config.buildPath))
-  );
+Eagle.extend('version', function (buildPath) {
+  new VersionTask('version', getPaths(buildPath));
 });
 
-gulp.task('version', ['pre-version'], function () {
+function getPaths(buildPath = config.versionFolder) {
+  const src = config.buildPath + '/**/*.{js,css}';
 
-  var manifest = config.buildPath + '/rev-manifest.json',
-    src = config.buildPath + '/**/*.{html,js,css}',
-    manifestStream = gulp.src(manifest);
-
-  return (
-    gulp.src(src, {
-      base: config.buildPath
-    })
-      .pipe($.revReplace({
-        manifest: manifestStream,
-        prefix: config.cdn
-      }))
-      .pipe(gulp.dest(config.buildPath))
-      .on('end', function () {
-        delOriginalFiles(config.buildPath, manifest);
-      })
-  );
-});
-
-function delOriginalFiles (buildPath, manifest) {
-  fs.stat(manifest, function (err) {
-    if (!err) {
-      manifest = JSON.parse(fs.readFileSync(manifest));
-
-      for (var key in manifest) {
-        del.sync(buildPath + '/' + key, {
-          force: true
-        });
-      }
-    }
-  });
+  return new GulpPaths().src(src).output(buildPath);
 }

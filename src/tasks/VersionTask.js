@@ -1,4 +1,3 @@
-const fs = require('fs');
 const del = require('del');
 const { Task, log } = global.Eagle;
 const { gulp } = global;
@@ -21,46 +20,52 @@ class VersionTask extends Task {
     }
   }
 
-  gulpTask($) {
-    this.deleteManifestFiles();
+  gulpTask($, config) {
+    this.deleteBuildDirectory();
 
     return (
       gulp
         .src(this.src.path)
         .pipe($.rev())
-        .pipe(this.updateVersionedPathInFiles($))
         .pipe(gulp.dest(this.buildPath))
         .pipe($.rev.manifest())
         .pipe(this.save(gulp))
+        .on('end', () => this.dependentTask($, config))
     );
   }
 
   /**
    * Update files to point to the newly versioned file name.
-   *
-   * @param {Elixir.Plugins} $
    */
-  updateVersionedPathInFiles($) {
-    let buildFolder = this.buildPath.replace('\\', '/');
+  updateVersionedPathInFiles($, config) {
+    const buildFolder = this.buildPath.replace(config.buildPath, '').replace('\\', '/');
+    const path = `/${buildFolder}/`.replace('//', '/');
 
-    return $.revReplace({ prefix: buildFolder + '/' });
+    return $.revReplace({
+      manifest: gulp.src(`${this.buildPath}/rev-manifest.json`),
+      prefix: `${config.cdn}${path}`
+    });
   }
 
 
   /**
-   * Empty the last files from the build directory.
+   * Empty the last build directory.
    */
-  deleteFiles(ishash = true) {
-    let manifest = `${this.buildPath}/rev-manifest.json`;
+  deleteBuildDirectory() {
+    del.sync(this.buildPath, { force: true });
+  }
 
-    if (!fs.existsSync(manifest)) return;
+  dependentTask($, config) {
+    gulp.task('version-replace', () => {
+      return (
+        gulp
+          .src(`${config.buildPath}/**/*.html`)
+          .pipe(this.updateVersionedPathInFiles($, config))
+          .pipe(gulp.dest(config.buildPath))
+      );
+    });
 
-    manifest = JSON.parse(fs.readFileSync(manifest));
-
-    for (let key in manifest) {
-      const path = ishash ? manifest[key] : key;
-      del.sync(`${this.buildPath}/${path}`, { force: true });
-    }
+    gulp.start('version-replace');
   }
 }
 
