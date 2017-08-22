@@ -1,7 +1,7 @@
 const { gulp, Eagle } = global;
-const { GulpPaths, checkOptions, Task } = Eagle;
+const { GulpPaths, Task } = Eagle;
 
-Eagle.extend('html', function (src, output, options) {
+Eagle.extend('html', function (src, output) {
   const paths = new GulpPaths().src(src).output(output, 'index.html');
 
   new Task('html', function ($, config) {
@@ -11,7 +11,7 @@ Eagle.extend('html', function (src, output, options) {
       gulp
         .src(paths.src.path)
         .pipe($.if(compress.enabled, this.minify()))
-        .pipe(this.removePath(checkOptions(options)))
+        .pipe(this.removePath())
         .pipe(this.save(gulp))
     );
   }, paths)

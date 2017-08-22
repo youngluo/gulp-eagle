@@ -34,7 +34,7 @@ class Log {
       }
     });
 
-    return this;
+    return this.break();
   }
 
   error(message) {

@@ -1,7 +1,9 @@
 const p = require('path');
+const glob = require('glob');
 const parsePath = require('parse-filepath');
-const { config } = global.Eagle;
-const { util } = global.plugins;
+const { _, Eagle, plugins } = global;
+const { config } = Eagle;
+const { util } = plugins;
 
 class GulpPaths {
   /**
@@ -26,19 +28,39 @@ class GulpPaths {
     this.output = this.parse(output);
 
     if (!this.output.name && defaultName) {
-      // See if we can use the name of the input file for the output name,
-      // just as long as we substitute the ext name (.sass => .css).
-      if (!Array.isArray(this.src.path) && this.src.name.indexOf('*') === -1) {
-        defaultName = this.changeExtension(
-          this.src.name,
-          this.parse(defaultName).extension
-        );
-      }
+      const { extension } = this.parse(defaultName);
 
-      this.output = this.parse(p.join(output, defaultName));
+      // See if we can use the name of the input file for the output name,
+      // just as long as we substitute the ext name (.scss => .css).
+      if (!Array.isArray(this.src.path) && this.src.name.indexOf('*') === -1) {
+        defaultName = this.changeExtension(this.src.name, extension);
+
+        this.output = this.parse(p.join(output, defaultName));
+      } else {
+        this.output.path = this.getOutputPath().map(path => {
+          path = this.changeExtension(path, extension);
+
+          return p.join(this.output.baseDir, path);
+        });
+
+        this.output.extension = extension;
+      }
     }
 
     return this;
+  }
+
+  getOutputPath() {
+    let { path } = this.src;
+    path = Array.isArray(path) ? path : [path];
+
+    return _.flatten(
+      path.map(src => {
+        const base = src.indexOf('*') > -1 ? src.split('*')[0] : this.parse(src).baseDir;
+
+        return glob.sync(src).map(path => p.relative(base, path));
+      })
+    );
   }
 
   changeExtension(path, newExtension) {

@@ -1,21 +1,13 @@
 const JsTask = require('../tasks/JsTask');
 const { Eagle } = global;
-const { GulpPaths, checkOptions } = Eagle;
+const { GulpPaths } = Eagle;
 
-Eagle.extend('script', function (src, output, options) {
-  new JsTask('script', getPaths(src, output), checkOptions(options));
+Eagle.extend('script', function (src, output) {
+  new JsTask('script', getPaths(src, output));
 });
 
-Eagle.extend('scriptIn', function (src, output, options) {
-  new JsTask('scriptIn', getPaths(src, output), checkOptions(options), true);
-});
-
-Eagle.extend('babel', function (src, output, options) {
-  new JsTask('babel', getPaths(src, output), checkOptions(options));
-});
-
-Eagle.extend('babelIn', function (src, output, options) {
-  new JsTask('babelIn', getPaths(src, output), checkOptions(options), true);
+Eagle.extend('babel', function (src, output) {
+  new JsTask('babel', getPaths(src, output));
 });
 
 function getPaths(src, output) {

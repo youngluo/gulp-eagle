@@ -1,7 +1,7 @@
 const { gulp, Eagle } = global;
-const { GulpPaths, checkOptions, Task } = Eagle;
+const { GulpPaths, Task } = Eagle;
 
-Eagle.extend('image', function (src, output, options) {
+Eagle.extend('image', function (src, output) {
   const paths = new GulpPaths().src(src).output(output);
 
   new Task('image', function () {
@@ -9,7 +9,7 @@ Eagle.extend('image', function (src, output, options) {
       gulp
         .src(paths.src.path)
         .pipe(this.minify())
-        .pipe(this.removePath(checkOptions(options)))
+        .pipe(this.removePath())
         .pipe(this.save(gulp))
     );
   }, paths)

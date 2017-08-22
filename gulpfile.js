@@ -6,11 +6,11 @@ Eagle.config.html.compress.enabled = true;
 Eagle(mix => {
   mix
     .sass([
-      './test-app/*/index.scss',
-      './test-app/*/demo.scss'
+      './test-app/*/*.scss',
+      './test-app/test.scss'
     ], 'css')
     .babel('./test-app/babel/index.js', 'js')
-    .babelIn('./test-app/babel/*.js', 'js')
-    .html('./test-app/index.html')
-    .version();
+    .babel('./test-app/babel/*.js', 'js/concat.js');
+  // .html('./test-app/index.html')
+  // .version();
 });

@@ -22,10 +22,10 @@ class JsTask extends Task {
         .pipe(this.initSourceMaps())
         .pipe(this.compile())
         .on('error', this.onError())
-        .pipe($.if(this.isConcat, this.concat()))
+        .pipe(this.concat())
         .pipe(this.minify())
         .on('error', this.onError())
-        .pipe(this.removePath(this.options))
+        .pipe(this.removePath())
         .pipe(this.writeSourceMaps())
         .pipe(this.save(gulp))
     );

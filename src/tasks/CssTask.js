@@ -9,10 +9,10 @@ class CssTask extends Task {
    * @param {object} options
    * @param {boolen} isConcat Decide whether to concat files
    */
-  constructor(name, paths, options, isConcat) {
+  constructor(name, paths, options) {
     super(name, null, paths);
+
     this.options = options;
-    this.isConcat = isConcat || false;
   }
 
   gulpTask() {
@@ -22,12 +22,12 @@ class CssTask extends Task {
         .pipe(this.initSourceMaps())
         .pipe(this.compile())
         .on('error', this.onError())
-        .pipe(this.autoPrefix())
         .pipe(this.processUrls())
-        .pipe($.if(this.isConcat, this.concat()))
+        .pipe(this.autoPrefix())
+        .pipe(this.concat())
         .pipe(this.minify())
         .on('error', this.onError())
-        .pipe(this.removePath(this.options))
+        .pipe(this.removePath())
         .pipe(this.writeSourceMaps())
         .pipe(this.save(gulp))
     );
@@ -37,19 +37,16 @@ class CssTask extends Task {
     // this
     //   .watch(this.src.path)
     //   .ignore(this.output.path);
-    console.log(this.output);
-    console.log(this.src);
   }
 
   compile() {
-    const name = this.name.replace('In', '');
-    const plugin = $[name];
+    const plugin = $[this.name];
 
     if (!plugin) {
       return this.stream();
     }
 
-    return plugin(config.css[name].pluginOptions);
+    return plugin(config.css[this.name].pluginOptions);
   }
 
   autoPrefix() {

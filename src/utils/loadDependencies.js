@@ -34,6 +34,4 @@ Eagle.tasks = [];
  */
 Eagle.Task = require('../tasks/Task');
 
-Eagle.checkOptions = require('./checkOptions');
-
 Eagle.Notification = require('./Notification');

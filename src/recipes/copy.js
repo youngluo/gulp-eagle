@@ -1,7 +1,7 @@
 const { gulp, Eagle } = global;
-const { GulpPaths, checkOptions, Task } = Eagle;
+const { GulpPaths, Task } = Eagle;
 
-Eagle.extend('copy', function (src, output, options) {
+Eagle.extend('copy', function (src, output) {
   const paths = new GulpPaths().src(src).output(output);
 
   new Task('copy', function ($) {
@@ -9,7 +9,7 @@ Eagle.extend('copy', function (src, output, options) {
       gulp
         .src(paths.src.path, { dot: true })
         .pipe($.if(!paths.output.isDir, $.rename(paths.output.name)))
-        .pipe(this.removePath(checkOptions(options)))
+        .pipe(this.removePath())
         .pipe(this.save(gulp))
     );
   }, paths)

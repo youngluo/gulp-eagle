@@ -45,8 +45,6 @@ class VersionTask extends Task {
   }
 
   dependentTask() {
-    console.log(gulp.tasks);
-
     gulp.task('version-replace', () => {
       return (
         gulp

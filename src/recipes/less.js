@@ -1,13 +1,9 @@
 const CssTask = require('../tasks/CssTask');
 const { Eagle } = global;
-const { GulpPaths, checkOptions } = Eagle;
+const { GulpPaths } = Eagle;
 
-Eagle.extend('less', function (src, output, options) {
-  new CssTask('less', getPaths(src, output), checkOptions(options), false);
-});
-
-Eagle.extend('lessIn', function (src, output, options) {
-  new CssTask('lessIn', getPaths(src, output), checkOptions(options), true);
+Eagle.extend('less', function (src, output) {
+  new CssTask('less', getPaths(src, output));
 });
 
 function getPaths(src, output) {

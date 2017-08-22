@@ -1,7 +1,7 @@
 const bs = require('browser-sync').create();
 const map = require('vinyl-map2');
 const minifier = require('../utils/minifier');
-const { _, Eagle, plugins } = global;
+const { _, Eagle, plugins: $ } = global;
 const { tasks, config, log: logger } = Eagle;
 
 let id = 0;
@@ -33,7 +33,7 @@ class Task {
   run() {
     this.log(this.src, this.output);
 
-    let stream = this.gulpTask(plugins, config).on('finish', bs.reload);
+    let stream = this.gulpTask($, config).on('finish', bs.reload);
 
     this.isComplete = true;
 
@@ -88,7 +88,7 @@ class Task {
       return this.stream();
     }
 
-    return plugins.sourcemaps.init(options);
+    return $.sourcemaps.init(options);
   }
 
   /**
@@ -99,7 +99,7 @@ class Task {
       return this.stream();
     }
 
-    return plugins.sourcemaps.write('.');
+    return $.sourcemaps.write('.');
   }
 
   /**
@@ -117,7 +117,11 @@ class Task {
     * concat files.
     */
   concat() {
-    return plugins.concat(this.output.name);
+    if (!this.output.name) {
+      return this.stream();
+    }
+
+    return $.concat(this.output.name);
   }
 
   /**
@@ -130,12 +134,12 @@ class Task {
   /**
    * remove files path.
    */
-  removePath({ removePath }) {
-    if (!removePath) {
+  removePath() {
+    if (!config.removePath) {
       return this.stream();
     }
 
-    return plugins.rename({ dirname: '' });
+    return $.rename({ dirname: '' });
   }
 
   onError() {
