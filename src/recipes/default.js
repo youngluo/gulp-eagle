@@ -1,8 +1,11 @@
-const { gulp, Eagle, plugins } = global;
-const { sequence } = plugins;
+const { gulp, Eagle, plugins: $, _ } = global;
 
 gulp.task('default', function (cb) {
-  const tasks = Eagle.tasks.map(task => task.name);
+  let tasks = Eagle.tasks.map(task => task.name);
 
-  sequence.apply(this, tasks)(cb);
+  if (_.includes(tasks, 'version')) {
+    tasks.push('version-replace');
+  }
+
+  $.sequence.apply(this, tasks)(cb);
 });

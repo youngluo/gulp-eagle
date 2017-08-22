@@ -25,6 +25,8 @@ class Task {
   register() {
     tasks.push(this);
 
+    this.registerWatchers && this.registerWatchers();
+
     return this;
   }
 

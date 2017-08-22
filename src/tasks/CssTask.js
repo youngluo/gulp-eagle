@@ -33,6 +33,14 @@ class CssTask extends Task {
     );
   }
 
+  registerWatchers() {
+    // this
+    //   .watch(this.src.path)
+    //   .ignore(this.output.path);
+    console.log(this.output);
+    console.log(this.src);
+  }
+
   compile() {
     const name = this.name.replace('In', '');
     const plugin = $[name];

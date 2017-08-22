@@ -1,71 +1,60 @@
 const del = require('del');
-const { Task, log } = global.Eagle;
-const { gulp } = global;
+const { Task, config } = global.Eagle;
+const { gulp, plugins: $ } = global;
 
 class VersionTask extends Task {
 
   constructor(name, paths) {
     super(name, null, paths);
 
-    this.buildPath = this.output.baseDir;
-
-    if (this.src.baseDir === this.buildPath) {
-      if (this.src.path.find(path => /\*/.test(path))) {
-        log.error(
-          'Because you\'ve overridden the "mix.version()" build path ' +
-          'to be the same as your source path, you cannot pass a ' +
-          'regular expression. Please use full file paths instead.'
-        );
-      }
-    }
+    this.versionPath = this.output.baseDir;
+    this.dependentTask();
   }
 
-  gulpTask($, config) {
+  gulpTask() {
     this.deleteBuildDirectory();
 
     return (
       gulp
         .src(this.src.path)
         .pipe($.rev())
-        .pipe(gulp.dest(this.buildPath))
+        .pipe(this.save(gulp))
         .pipe($.rev.manifest())
         .pipe(this.save(gulp))
-        .on('end', () => this.dependentTask($, config))
     );
   }
-
-  /**
-   * Update files to point to the newly versioned file name.
-   */
-  updateVersionedPathInFiles($, config) {
-    const buildFolder = this.buildPath.replace(config.buildPath, '').replace('\\', '/');
-    const path = `/${buildFolder}/`.replace('//', '/');
-
-    return $.revReplace({
-      manifest: gulp.src(`${this.buildPath}/rev-manifest.json`),
-      prefix: `${config.cdn}${path}`
-    });
-  }
-
 
   /**
    * Empty the last build directory.
    */
   deleteBuildDirectory() {
-    del.sync(this.buildPath, { force: true });
+    del.sync(this.versionPath, { force: true });
   }
 
-  dependentTask($, config) {
+  /**
+   * Update files to point to the newly versioned file name.
+   */
+  updateVersionedPathInFiles() {
+    const versionFolder = this.versionPath.replace(config.buildPath, '').replace('\\', '/');
+    const path = `/${versionFolder}/`.replace('//', '/');
+
+    return $.revReplace({
+      manifest: gulp.src(`${this.versionPath}/rev-manifest.json`),
+      prefix: `${config.cdn}${path}`
+    });
+  }
+
+  dependentTask() {
+    console.log(gulp.tasks);
+
     gulp.task('version-replace', () => {
       return (
         gulp
           .src(`${config.buildPath}/**/*.html`)
-          .pipe(this.updateVersionedPathInFiles($, config))
-          .pipe(gulp.dest(config.buildPath))
+          .pipe(this.updateVersionedPathInFiles())
+          .pipe(this.save(gulp, config.buildPath))
       );
     });
-
-    gulp.start('version-replace');
   }
 }
 

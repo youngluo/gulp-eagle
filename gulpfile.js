@@ -5,7 +5,7 @@ Eagle.config.html.compress.enabled = true;
 
 Eagle(mix => {
   mix
-    .sassIn([
+    .sass([
       './test-app/*/index.scss',
       './test-app/*/demo.scss'
     ], 'css')
