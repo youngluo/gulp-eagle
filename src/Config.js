@@ -17,6 +17,12 @@ const config = {
     timeout: 1000
   },
 
+  watch: {
+    // https://www.npmjs.com/package/gulp-watch/#options
+    interval: 1000,
+    usePolling: true
+  },
+
   html: {
     compress: {
       enabled: false,

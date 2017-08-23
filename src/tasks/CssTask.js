@@ -34,9 +34,9 @@ class CssTask extends Task {
   }
 
   registerWatchers() {
-    // this
-    //   .watch(this.src.path)
-    //   .ignore(this.output.path);
+    this
+      .watch(this.src.path)
+      .ignore(this.output.path);
   }
 
   compile() {

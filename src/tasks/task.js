@@ -63,6 +63,7 @@ class Task {
       if (!Array.isArray(regex)) {
         regex = [regex];
       }
+
       this.watchers = _.union(this.watchers, regex);
     }
 
@@ -73,7 +74,13 @@ class Task {
    * Exclude the given path from the watcher.
    */
   ignore(path) {
-    this.watchers.push((`!./${path}`).replace('././', './'));
+    if (path) {
+      if (!Array.isArray(path)) {
+        path = [path];
+      }
+
+      this.watchers = _.union(this.watchers, path.map(p => (`!./${p}`).replace('././', './')));
+    }
 
     return this;
   }

@@ -10,7 +10,7 @@ Eagle(mix => {
       './test-app/test.scss'
     ], 'css')
     .babel('./test-app/babel/index.js', 'js')
-    .babel('./test-app/babel/*.js', 'js/concat.js');
-  // .html('./test-app/index.html')
-  // .version();
+    .babel('./test-app/babel/*.js', 'js/concat.js')
+    .html('./test-app/index.html')
+    .version();
 });

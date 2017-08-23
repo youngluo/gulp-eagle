@@ -37,11 +37,14 @@ class GulpPaths {
 
         this.output = this.parse(p.join(output, defaultName));
       } else {
-        this.output.path = this.getOutputPath().map(path => {
+        const outputPaths = this.getOutputPath().map(path => {
           path = this.changeExtension(path, extension);
 
           return p.join(this.output.baseDir, path);
         });
+
+        this.output.path = config.removePath ?
+          outputPaths.map(path => p.join(output, this.parse(path).name)) : outputPaths;
 
         this.output.extension = extension;
       }

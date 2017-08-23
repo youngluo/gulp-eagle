@@ -31,6 +31,12 @@ class JsTask extends Task {
     );
   }
 
+  registerWatchers() {
+    this
+      .watch(this.src.path)
+      .ignore(this.output.path);
+  }
+
   compile() {
     const name = this.name.replace('In', '');
     const plugin = $[name];

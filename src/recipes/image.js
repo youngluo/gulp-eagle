@@ -13,6 +13,5 @@ Eagle.extend('image', function (src, output) {
         .pipe(this.save(gulp))
     );
   }, paths)
-    .watch(paths.src.path)
-    .ignore(paths.output.path);
+    .watch(paths.src.path);
 });
