@@ -1,5 +1,5 @@
 const find = () => {
-  console.log('nothing hahaha yoyoyo');
+  console.log('hahahasss');
 };
 
-export default find;
+find();

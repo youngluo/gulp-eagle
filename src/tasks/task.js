@@ -1,8 +1,7 @@
-const bs = require('browser-sync').create();
 const map = require('vinyl-map2');
 const minifier = require('../utils/minifier');
 const { _, Eagle, plugins: $ } = global;
-const { tasks, config, log: logger } = Eagle;
+const { tasks, config, log: logger, BS } = Eagle;
 
 let id = 0;
 
@@ -12,8 +11,11 @@ class Task {
     this.name = name;
     this.watchers = [];
     this.isComplete = false;
-    this.src = paths.src;
-    this.output = paths.output;
+
+    if (paths) {
+      this.src = paths.src;
+      this.output = paths.output;
+    }
 
     if (!this.gulpTask) {
       this.gulpTask = gulpTask;
@@ -31,9 +33,15 @@ class Task {
   }
 
   run() {
-    this.log(this.src, this.output);
+    if (this.src && this.output) {
+      this.log();
+    }
 
-    let stream = this.gulpTask($, config).on('finish', bs.reload);
+    let stream = this.gulpTask($, config);
+
+    if (stream) {
+      stream.on('finish', BS.reload);
+    }
 
     this.isComplete = true;
 
@@ -43,7 +51,7 @@ class Task {
   /**
    * Log the task input and output.
    */
-  log(src, output) {
+  log(src = this.src, output = this.output) {
     logger
       .heading(`Fetching ${_.capitalize(this.name)} Source Files...`)
       .filesPath(src.path || src, true);

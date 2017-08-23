@@ -1,5 +1,5 @@
 const fs = require('fs');
-const gUtil = require('gulp-util');
+const { util } = global.plugins;
 
 
 class Log {
@@ -12,7 +12,7 @@ class Log {
   heading(heading) {
     return this
       .break()
-      .message(gUtil.colors.black(gUtil.colors.bgGreen(heading)));
+      .message(util.colors.black(util.colors.bgGreen(heading)));
   }
 
   /**
@@ -30,7 +30,7 @@ class Log {
       if (!checkForFiles || this.isFileExist(file)) {
         this.message(spacer + file);
       } else {
-        this.message(spacer + gUtil.colors.bgRed(file) + ' <-- Not Found');
+        this.message(spacer + util.colors.bgRed(file) + ' <-- Not Found');
       }
     });
 
@@ -38,7 +38,7 @@ class Log {
   }
 
   error(message) {
-    return this.break().message(gUtil.colors.bgRed(message));
+    return this.break().message(util.colors.bgRed(message));
   }
 
   message(message) {

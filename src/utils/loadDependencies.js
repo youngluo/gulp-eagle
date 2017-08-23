@@ -29,6 +29,8 @@ Eagle.GulpPaths = require('./GulpPaths');
  */
 Eagle.tasks = [];
 
+Eagle.BS = require('browser-sync').create();
+
 /**
  * Each Gulp task is stored as a Task instance.
  */

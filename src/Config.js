@@ -1,5 +1,5 @@
-const gutils = require('gulp-util');
-const production = gutils.env.prod || false;
+const { util } = global.plugins;
+const production = util.env.prod || false;
 
 const config = {
   production,
@@ -94,18 +94,10 @@ const config = {
 
   // Browser refresh automatically.
   browserSync: {
-    options: {
-      port: 8080,
-      startPath: 'index.html'
-    },
-
-    // Server baseDir
-    baseDir: '',
-    notify: {
-      enabled: true,
-      backgroundColor: '#339966',
-      color: '#fff'
-    }
+    // http://www.browsersync.io/docs/options/
+    port: 3000,
+    reloadOnRestart: true,
+    notify: true,
   },
 
   notifications: true,
