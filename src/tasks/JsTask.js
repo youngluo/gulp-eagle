@@ -1,18 +1,15 @@
-const { Task, config } = global.Eagle;
-const { gulp, plugins: $ } = global;
+const through2 = require('through2');
+const { Task, config, constants } = global.Eagle;
+const { gulp, plugins: $, _ } = global;
 
 class JsTask extends Task {
   /**
    *
    * @param {string} name
    * @param {object} paths
-   * @param {object} options
-   * @param {boolen} isConcat Decide whether to concat files
    */
-  constructor(name, paths, options, isConcat) {
+  constructor(name, paths) {
     super(name, null, paths);
-    this.options = options;
-    this.isConcat = isConcat;
   }
 
   gulpTask() {
@@ -22,6 +19,7 @@ class JsTask extends Task {
         .pipe(this.initSourceMaps())
         .pipe(this.compile())
         .on('error', this.onError())
+        .pipe(this.replaceConstants())
         .pipe(this.concat())
         .pipe(this.minify())
         .on('error', this.onError())
@@ -38,14 +36,32 @@ class JsTask extends Task {
   }
 
   compile() {
-    const name = this.name.replace('In', '');
-    const plugin = $[name];
+    const plugin = $[this.name];
 
     if (!plugin) {
       return this.stream();
     }
 
-    return plugin(config.js[name].pluginOptions);
+    return plugin(config.js[this.name].pluginOptions);
+  }
+
+  replaceConstants() {
+    return through2
+      .obj(function (file, enc, callback) {
+        let content = file.contents.toString();
+
+        _.forEach(constants, (value, constant) => {
+          content = content
+            .replace(new RegExp(constant, 'g'), `'${value}'`)
+            .replace(/''/g, '\'');
+        });
+
+        file.contents = new Buffer(content);
+
+        this.push(file);
+
+        callback();
+      });
   }
 }
 

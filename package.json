@@ -35,7 +35,7 @@
     "gulp-babel": "^7.0.0",
     "gulp-batch": "^1.0.5",
     "gulp-concat": "^2.6.1",
-    "gulp-css-processor": "^1.0.0",
+    "gulp-css-processor": "^1.1.0",
     "gulp-htmlmin": "^3.0.0",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^3.3.0",
@@ -54,6 +54,7 @@
     "lodash": "^4.17.4",
     "parse-filepath": "^1.0.1",
     "require-dir": "^0.3.2",
+    "through2": "^2.0.3",
     "vinyl-map2": "^1.2.1"
   },
   "devDependencies": {

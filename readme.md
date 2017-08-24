@@ -1,14 +1,14 @@
 # Gulp Eagle
 
-## 1. 简介
+## 简介
 
 Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了简洁的 API ，方便我们快速的使用 gulp 构建前端项目。
 
-## 2. 安装
+## 安装
 
 	npm install --save-dev gulp-eagle
 
-## 3. 使用
+## 使用
 
 	var Eagle = require('gulp-eagle');
 	Eagle(function (mix) {
@@ -17,109 +17,89 @@ Gulp Eagle 是基于 Laravel Elixir 改造的 gulp 构建工具。它提供了�
             .script('./src/**/*.js, 'js')
 	});
     
-## 4. 运行
+## 运行
 
-- `gulp`：运行所有任务；
-- `gulp watch`：监控前端资源的改变，开启浏览器实时刷新功能；
-- `gulp --prod`：运行所有任务，自动压缩任务中的 css 、js 和图片文件，并为配置文件中指定的文件类型加上版本号。
+- `gulp`：运行所有任务。
+- `gulp watch`：监控前端资源的改变。
+- `gulp --prod`：运行所有任务，自动压缩任务中的 css 、js 和图片文件。
     
-## 5. API
+## API
 
-#### 5.1 sass(src[, output, removePath])
+### sass(src[, output])
 
-将 sass 文件编译成 css 文件。
+The sass method allows you to compile Sass into CSS.
 
-	mix.sass('./src/**/*.scss', 'css')
+```
+mix.sass('./src/**/*.scss', 'css')
+```
 
-##### src
+You may also combine multiple Sass files into a single CSS file By specifying a specific file name.
 
-类型：String 或 Array
+```
+mix.sass('./src/**/*.scss', 'css/app.css')
 
-源文件。
+mix.sass([
+  './src/app.scss',
+  './src/components/*.scss'
+], 'css/app.css')
+```
 
-##### output
+### less(src[, output])
 
-类型：String
+The less method allows you to compile Less into CSS. The usage like the `sass` method above.
 
-产出路径。
+### style(src[, output])
 
-##### removePath
-
-类型：Boolean 默认值：true
-
-默认去除源文件原有路径，只保留目标文件到产出文件夹（build）中。
-
-#### 5.2 sassIn(src, output)
-
-将多个 sass 文件合并编译成 css 文件。
-
-	mix.sass([
-		'./src/aaa/*.scss',
-		'./src/bbb/*.scss'
-	], 'css/app.css')
-
-##### src
-
-类型：String 或 Array
-
-源文件。
-
-##### output
-
-类型：String
-
-产出路径，必须以文件名结尾，如`css/app.css`。
-
-#### 5.3 style(src[, output, removePath])
-
-产出原生 css 文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
-
-	mix.style('./src/css/*.css', 'css')
+If you would just like to combine some plain CSS stylesheets into a single file, you may use the `style` method. The usage like the `sass` method above.
 	
-#### 5.4 styleIn(src, output)
+### script(src[, output])
 
-合并多个原生 css 文件，参数详情见 [5.2](#user-content-52-sassinsrc-output)。
+The script method allows you to process JavaScript files, which provides automatic source maps, concatenation, and minification.
 
-	mix.styleIn([
-		'./src/aaa/aaa.css',
-		'./src/bbb/bbb.css'
-	], 'css/app.css')
-	
-#### 5.5 script(src[, output, removePath])
+```
+mix.script('./src/js/*.js', 'js')
+```
 
-产出 js 文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
+If you have multiple JavaScript files that you would like to combine into a single file, you can specify a specific file name.
 
-	mix.script('./src/js/*.js', 'js')
-	
-#### 5.6 scriptIn(src, output)
+```
+mix.script('./src/js/*.js', 'js/app.js')
 
-合并多个 js 文件，参数详情见 [5.2](#user-content-52-sassinsrc-output)。
+mix.script([
+  './src/js/*.js',
+  './src/index.js
+], 'js/app.js')
+```
 
-	mix.scriptIn([
-		'./src/aaa/aaa.js',
-		'./src/bbb/bbb.js'
-	], 'css/app.js')
+### babel(src[, output])
+
+The babel method allows you to compile ES6 into ES5. And has the function of the above `script` method.
+
+```
+mix.babel('./src/js/*.js', 'js')
+
+mix.babel('./src/js/*.js', 'js/app.js')
+```
     
-#### 5.8 image(src[, output, removePath])
+### image(src[, output])
 
-产出图片文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
+The image method may be used to copy image files and directories to new locations. And open image compression in production mode.
 
-	mix.image('./src/images', 'images', {removePath: false})
+```
+mix.image('./src/images/**', 'images')
+```
     
-#### 5.9 html(src[, output, removePath])
+### html(src[, output])
 
-产出html文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
-
-	mix.html('./src/**/*.html')
+```
+mix.html('./src/**/*.html')
+```
     
-#### 5.10 copy(src[, output, removePath])
+### copy(src[, output])
 
-复制文件，参数详情见 [5.1](#user-content-51-sasssrc-output-removepath)。
-
-	mix.copy('./src/assets/fonts/**', 'assets/fonts')
-	
-## 6. 配置文件介绍
-
+```
+mix.copy('./src/assets/fonts/**', 'assets/fonts')
+```
 
 ## 更新日志
     

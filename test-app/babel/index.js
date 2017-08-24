@@ -1,5 +1,4 @@
 const find = () => {
-  console.log('hahahasss');
 };
 
-find();
+find(API);

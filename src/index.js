@@ -29,6 +29,10 @@ Eagle.extend = function (name, callback) {
   }.bind(this);
 };
 
+Eagle.define = function (options = {}) {
+  Eagle.constants = options;
+};
+
 global.Eagle = Eagle;
 
 require('./utils/loadDependencies');

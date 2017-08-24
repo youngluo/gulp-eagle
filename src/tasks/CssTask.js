@@ -6,13 +6,9 @@ class CssTask extends Task {
    *
    * @param {string} name
    * @param {object} paths
-   * @param {object} options
-   * @param {boolen} isConcat Decide whether to concat files
    */
-  constructor(name, paths, options) {
+  constructor(name, paths) {
     super(name, null, paths);
-
-    this.options = options;
   }
 
   gulpTask() {
@@ -58,14 +54,17 @@ class CssTask extends Task {
   }
 
   processUrls() {
-    if (!config.css.processCssUrls) {
+    const { enabled, options } = config.css.processCssUrls;
+
+    if (!enabled) {
       return this.stream();
     }
 
-    return $.cssProcessor({
-      dist: config.buildPath,
-      assets: config.buildPath + '/assets'
-    });
+    if (!options.prefix && config.cdn) {
+      options.prefix = config.cdn;
+    }
+
+    return $.cssProcessor(options);
   }
 }
 

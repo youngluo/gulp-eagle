@@ -36,7 +36,12 @@ const config = {
   },
 
   css: {
-    processCssUrls: true,
+    processCssUrls: {
+      enabled: true,
+
+      // https://www.npmjs.com/package/gulp-css-processor#options
+      options: {}
+    },
 
     autoprefix: {
       enabled: true,

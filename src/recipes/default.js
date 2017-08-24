@@ -1,7 +1,9 @@
 const { gulp, Eagle, plugins: $, _ } = global;
-const { config } = Eagle;
+const { config, define } = Eagle;
 
 gulp.task('default', function (cb) {
+  define && define();
+
   let tasks = Eagle.tasks.map(task => task.name);
 
   if (_.includes(tasks, 'version')) {
