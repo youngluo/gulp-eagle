@@ -32,7 +32,7 @@ Eagle(function (mix) {
 
 ### sass(src[, output])
 
-The sass method allows you to compile Sass into CSS.
+The `sass` method allows you to compile Sass into CSS.
 
 ```
 mix.sass('./src/**/*.scss', 'css')
@@ -51,7 +51,7 @@ mix.sass([
 
 ### less(src[, output])
 
-The less method allows you to compile Less into CSS. The usage like the above `sass` method.
+The `less` method allows you to compile Less into CSS. The usage like the above `sass` method.
 
 ### style(src[, output])
 
@@ -59,7 +59,7 @@ If you would just like to process some plain CSS stylesheets, you may use the `s
 	
 ### script(src[, output])
 
-The script method allows you to process JavaScript files, which provides automatic source maps, concatenation, and minification.
+The `script` method allows you to process JavaScript files, which provides automatic source maps, concatenation, and minification.
 
 ```
 mix.script('./src/js/*.js', 'js')
@@ -78,7 +78,7 @@ mix.script([
 
 ### babel(src[, output])
 
-The babel method allows you to compile ES6 into ES5. And has the function of the above `script` method.
+The `babel` method allows you to compile ES6 into ES5. And has the function of the above `script` method.
 
 ```
 mix.babel('./src/js/*.js', 'js')
@@ -88,7 +88,7 @@ mix.babel('./src/js/*.js', 'js/app.js')
     
 ### image(src[, output])
 
-The image method may be used to copy Image files and directories to new locations. And turn on Image compression in production mode automatically.
+The `image` method may be used to copy Image files and directories to new locations. And turn on Image compression in production mode automatically.
 
 ```
 mix.image('./src/images/**', 'images')
@@ -96,7 +96,7 @@ mix.image('./src/images/**', 'images')
     
 ### html(src[, output])
 
-The html method will copy html files to new locations. 
+The `html` method will copy html files to new locations. 
 
 ```
 mix.html('./src/**/*.html')
@@ -112,7 +112,7 @@ Eagle.config.html.compress.enabled = true;
     
 ### copy(src[, output])
 
-The copy method may be used to copy files and directories to new locations
+The `copy` method may be used to copy files and directories to new locations
 
 ```
 mix.copy('./src/assets/fonts/**', 'assets/fonts')
@@ -120,7 +120,7 @@ mix.copy('./src/assets/fonts/**', 'assets/fonts')
 
 ### version(versionPath)
 
-The version method accepts a path(default: `config.versionFolder: 'build'`) relative to the output directory（default: `config.buildPath: 'dist'`）. Execute only in production mode.
+The `version` method accepts a path(default: `config.versionFolder: 'build'`) relative to the output directory（default: `config.buildPath: 'dist'`）. Execute only in production mode.
 
 ```
 mix.version()
@@ -128,7 +128,7 @@ mix.version()
 
 ### browserSync(options)
 
-The browserSync method will automatically refresh your web browser after you make changes to your assets. Which accepts a JavaScript object, See the [BrowserSync](http://www.browsersync.io/docs/options) docs for options. Then, once you run `gulp watch` you may access your web application using port 3000 (http://localhost:3000) to enjoy browser syncing.
+The `browserSync` method will automatically refresh your web browser after you make changes to your assets. Which accepts a JavaScript object, See the [BrowserSync](http://www.browsersync.io/docs/options) docs for options. Then, once you run `gulp watch` you may access your web application using port 3000 (http://localhost:3000) to enjoy browser syncing.
 
 ```
 mix.browserSync()
@@ -148,5 +148,5 @@ mix.browserSync({
 
 ### 2.0.0
 
-- Added `mix.browserSync(options)`, `mix.version()`, `mix.babel(src[, output])` method.
-- Removed `mix.browserify()`, `mix.clean()`, `mix.*In()`.
+- Added `mix.browserSync(options)`, `mix.version()`, `mix.babel(src[, output])` methods.
+- Removed `mix.browserify()`, `mix.clean()`, `mix.*In()` methods.
