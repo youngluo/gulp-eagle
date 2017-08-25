@@ -1,5 +1,8 @@
 # Gulp Eagle
 
+[![npm](https://img.shields.io/npm/v/gulp-eagle.svg)](https://www.npmjs.com/package/gulp-eagle)
+[![npm](https://img.shields.io/npm/dm/gulp-eagle.svg)](https://www.npmjs.com/package/gulp-eagle)
+
 ## Introduction
 
 Gulp Eagle is based on [Laravel Elixir](https://github.com/laravel/elixir), which provides a clean, fluent API for defining basic Gulp tasks. I'm sure you'll love it, if you've ever experienced the trouble of defining the gulp task repeatedly.
@@ -30,7 +33,7 @@ Eagle(function (mix) {
     
 ## API
 
-### sass(src[, output])
+### sass(src, [output])
 
 The `sass` method allows you to compile Sass into CSS.
 
@@ -49,15 +52,39 @@ mix.sass([
 ], 'css/app.css')
 ```
 
-### less(src[, output])
+**By default, Gulp will rewrite and optimize any url() calls within your stylesheets.** Imagine that we want to compile Sass that includes a relative URL to an image:
+
+```
+body {
+    background: url('../image/img01.jpeg')
+}
+```
+
+Gulp Eagle will find img01.jpeg, copy it to your `dist/assets` folder, and then rewrite the url() within your generated stylesheet:
+
+```
+body {
+  background: url('/assets/img01.jpeg?v=592f09d1fd605e1c089031cabe6eced6')
+}
+```
+
+If you don't need it, you may disable url() rewriting like so:
+
+```
+var Eagle = require('gulp-eagle')
+
+Eagle.config.css.processCssUrls.enabled = false
+```
+
+### less(src, [output])
 
 The `less` method allows you to compile Less into CSS. The usage like the above `sass` method.
 
-### style(src[, output])
+### style(src, [output])
 
 If you would just like to process some plain CSS stylesheets, you may use the `style` method. The usage like the above `sass` method.
 	
-### script(src[, output])
+### script(src, [output])
 
 The `script` method allows you to process JavaScript files, which provides automatic source maps, concatenation, and minification.
 
@@ -76,7 +103,7 @@ mix.script([
 ], 'js/app.js')
 ```
 
-### babel(src[, output])
+### babel(src, [output])
 
 The `babel` method allows you to compile ES6 into ES5. And has the function of the above `script` method.
 
@@ -86,7 +113,7 @@ mix.babel('./src/js/*.js', 'js')
 mix.babel('./src/js/*.js', 'js/app.js')
 ```
     
-### image(src[, output])
+### image(src, [output])
 
 The `image` method may be used to copy Image files and directories to new locations. And turn on Image compression in production mode automatically.
 
@@ -94,7 +121,7 @@ The `image` method may be used to copy Image files and directories to new locati
 mix.image('./src/images/**', 'images')
 ```
     
-### html(src[, output])
+### html(src, [output])
 
 The `html` method will copy html files to new locations. 
 
@@ -107,10 +134,10 @@ You can also turn on HTML compression in production mode：
 ```
 var Eagle = require('gulp-eagle')
 
-Eagle.config.html.compress.enabled = true;
+Eagle.config.html.compress.enabled = true
 ```
     
-### copy(src[, output])
+### copy(src, [output])
 
 The `copy` method may be used to copy files and directories to new locations
 
