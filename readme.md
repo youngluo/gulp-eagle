@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/gulp-eagle.svg)](https://www.npmjs.com/package/gulp-eagle)
 [![npm](https://img.shields.io/npm/dm/gulp-eagle.svg)](https://www.npmjs.com/package/gulp-eagle)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/youngluo/gulp-eagle/blob/master/LICENSE)
 
 ## Introduction
 
@@ -175,5 +176,5 @@ mix.browserSync({
 
 ### 2.0.0
 
-- Added `mix.browserSync(options)`, `mix.version()`, `mix.babel(src[, output])` methods.
+- Added `mix.browserSync(options)`, `mix.version()`, `mix.babel(src, [output])` methods.
 - Removed `mix.browserify()`, `mix.clean()`, `mix.*In()` methods.
