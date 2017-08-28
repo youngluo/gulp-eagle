@@ -2,7 +2,7 @@ const fs = require('fs');
 const { Task, config, constants } = global.Eagle;
 const { gulp, _ } = global;
 
-let buffer, rollup, buble, vue, source, replace, commonjs, nodeResolve, multiEntry, cache;
+let buffer, rollup, buble, vue, source, replace, commonjs, nodeResolve, cache;
 
 class RollupTask extends Task {
   /**
@@ -66,13 +66,13 @@ class RollupTask extends Task {
     ];
 
     return rollup(
-      {
+      _.merge({
         entry: this.src.path,
         cache: cache,
         sourceMap: true,
         format: 'iife',
         plugins: defaultPlugins
-      }
+      }, this.rollupConfig, this.options)
     )
       .on('bundle', bundle => {
         cache = bundle;
