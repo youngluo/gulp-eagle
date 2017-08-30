@@ -46,14 +46,16 @@ class JsTask extends Task {
   }
 
   replaceConstants() {
+    if (!constants || !_.isObject(constants)) {
+      return this.stream();
+    }
+
     return through2
       .obj(function (file, enc, callback) {
         let content = file.contents.toString();
 
         _.forEach(constants, (value, constant) => {
-          content = content
-            .replace(new RegExp(constant, 'g'), `'${value}'`)
-            .replace(/''/g, '\'');
+          content = content.replace(new RegExp(constant, 'g'), JSON.stringify(value));
         });
 
         file.contents = new Buffer(content);

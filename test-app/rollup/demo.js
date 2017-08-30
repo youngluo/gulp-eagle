@@ -1,3 +1,3 @@
-const a = 10;
+const b = API + 'bbbbbbbbbbbbbbbbb';
 
-export default a;
+export default b;

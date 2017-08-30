@@ -1,8 +1,8 @@
 const fs = require('fs');
-const { Task, config, constants } = global.Eagle;
+const { Task, config, constants, fail } = global.Eagle;
 const { gulp, _ } = global;
 
-let buffer, rollup, buble, vue, source, replace, commonjs, nodeResolve, cache;
+let rollup, eagleRollup, buble, vue, replace, commonjs, nodeResolve, cache;
 
 class RollupTask extends Task {
   /**
@@ -16,6 +16,8 @@ class RollupTask extends Task {
 
     this.options = options;
 
+    this.exit();
+
     this.loadDependencies();
 
     if (fs.existsSync('rollup.config.js')) {
@@ -25,11 +27,11 @@ class RollupTask extends Task {
 
   gulpTask() {
     return (
-      this.rollup()
+      gulp
+        .src(this.src.path)
+        .pipe(this.initSourceMaps())
+        .pipe(this.rollup())
         .on('error', this.onError())
-        .pipe(source(this.output.name))
-        .pipe(buffer())
-        .pipe(this.initSourceMaps({ loadMaps: true }))
         .pipe(this.minify())
         .on('error', this.onError())
         .pipe(this.writeSourceMaps())
@@ -39,44 +41,66 @@ class RollupTask extends Task {
 
   registerWatchers() {
     this
-      .watch(this.src.path)
+      .watch(this.src.baseDir + '/**/*.{js,vue}')
       .ignore(this.output.path);
   }
 
   loadDependencies() {
-    buffer = require('vinyl-buffer');
-    rollup = require('rollup-stream');
+    rollup = require('rollup');
+    eagleRollup = require('gulp-eagle-rollup');
     vue = require('rollup-plugin-vue');
     buble = require('rollup-plugin-buble');
-    source = require('vinyl-source-stream');
     replace = require('rollup-plugin-replace');
     commonjs = require('rollup-plugin-commonjs');
     nodeResolve = require('rollup-plugin-node-resolve');
   }
 
   rollup() {
-    const defaultPlugins = [
+    let defaultPlugins = [
       nodeResolve({ browser: true, main: true, jsnext: true }),
       commonjs({
         exclude: config.buildPath + '/**'
       }),
-      replace(constants),
       vue(),
       buble()
     ];
 
-    return rollup(
+    if (constants && _.isObject(constants)) {
+      defaultPlugins.push(replace({
+        values: _.mapValues(constants, value => JSON.stringify(value))
+      }));
+    }
+
+    let options = _.merge({}, this.rollupConfig, this.options);
+
+    // Filter external parameters.
+    delete options.cache;
+    delete options.rollup;
+
+    if (!options.plugins) {
+      options.plugins = defaultPlugins;
+    }
+
+    return eagleRollup(
       _.merge({
-        entry: this.src.path,
+        rollup: rollup,
         cache: cache,
-        sourceMap: true,
-        format: 'iife',
-        plugins: defaultPlugins
-      }, this.rollupConfig, this.options)
+        output: {
+          format: 'iife'
+        }
+      }, options)
     )
       .on('bundle', bundle => {
         cache = bundle;
       });
+  }
+
+  exit() {
+    const { path } = this.src;
+
+    if (Array.isArray(path) || _.includes(path, '*')) {
+      fail(`${JSON.stringify(path)}\nThe rollup method can only match a single file.`);
+    }
   }
 }
 

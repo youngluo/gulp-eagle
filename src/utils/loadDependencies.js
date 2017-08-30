@@ -17,6 +17,8 @@ Eagle.config = require('../config');
  */
 Eagle.log = new (require('./Log'));
 
+Eagle.fail = message => Eagle.log.error(message) && process.exit(1);
+
 /**
  * This class determines the proper src and
  * output paths for any given task.
