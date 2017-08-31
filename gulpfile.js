@@ -12,5 +12,5 @@ Eagle(mix => {
     // .sass('./test-app/sass/index.scss', 'css')
     // .html('./test-app/index.html')
     // .browserSync();
-    .rollup('./test-app/rollup/*.js');
+    .rollup('./test-app/rollup/index.js', 'app.js', { output: { sourcemaps: false } });
 });

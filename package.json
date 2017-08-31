@@ -37,7 +37,7 @@
     "gulp-batch": "^1.0.5",
     "gulp-concat": "^2.6.1",
     "gulp-css-processor": "^1.1.0",
-    "gulp-eagle-rollup": "^1.0.1",
+    "gulp-eagle-rollup": "^1.1.0",
     "gulp-htmlmin": "^3.0.0",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^3.3.0",

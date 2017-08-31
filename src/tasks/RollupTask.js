@@ -88,7 +88,8 @@ class RollupTask extends Task {
         output: {
           format: 'iife'
         }
-      }, options)
+      }, options),
+      this.output.name
     )
       .on('bundle', bundle => {
         cache = bundle;
