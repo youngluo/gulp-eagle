@@ -3,6 +3,7 @@ npm-debug.log
 dist/
 test-app/
 gulpfile.js
+rollup.config.js
 .editorconfig
 .eslintrc
 .gitignore
