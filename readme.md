@@ -172,6 +172,10 @@ mix.browserSync({
 })
 ```
 
+### rollup(src, [output], [options])
+
+The `rollup` method supports bundle module by using [rollupjs](https://rollupjs.org/). 
+
 ## ChangeLog
 
 ### 2.0.0
