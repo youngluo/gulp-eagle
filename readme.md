@@ -174,9 +174,19 @@ mix.browserSync({
 
 ### rollup(src, [output], [options])
 
-The `rollup` method supports bundle module by using [rollupjs](https://rollupjs.org/). 
+The `rollup` method supports packaging modules by using [RollupJS](https://rollupjs.org/). **And the `src` parameter must be a single file.**
+
+```
+mix.rollup('./test-app/rollup/index.js', 'app.js')
+```
+
+You can set the [RollupJS configuration](https://rollupjs.org/#configuration-files) with the `options` parameter, and you can also customize the configuration by `rollup.config.js` in the project root directory.
 
 ## ChangeLog
+
+### 2.1.0
+
+- Added `rollup(src, [output], [options])` method.
 
 ### 2.0.0
 
