@@ -2,7 +2,7 @@ const fs = require('fs');
 const { Task, config, constants, fail } = global.Eagle;
 const { gulp, _ } = global;
 
-let rollup, eagleRollup, buble, vue, replace, commonjs, nodeResolve, cache;
+let rollup, eagleRollup, babel, replace, commonjs, nodeResolve, cache;
 
 class RollupTask extends Task {
   /**
@@ -48,8 +48,7 @@ class RollupTask extends Task {
   loadDependencies() {
     rollup = require('rollup');
     eagleRollup = require('gulp-eagle-rollup');
-    vue = require('rollup-plugin-vue');
-    buble = require('rollup-plugin-buble');
+    babel = require('rollup-plugin-babel');
     replace = require('rollup-plugin-replace');
     commonjs = require('rollup-plugin-commonjs');
     nodeResolve = require('rollup-plugin-node-resolve');
@@ -61,8 +60,7 @@ class RollupTask extends Task {
       commonjs({
         exclude: config.buildPath + '/**'
       }),
-      vue(),
-      buble()
+      babel()
     ];
 
     if (constants && _.isObject(constants)) {

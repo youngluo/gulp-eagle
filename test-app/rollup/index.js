@@ -1,3 +1,3 @@
-import b from './demo';
+import 'zepto';
 
-console.log(b);
+console.log($);
