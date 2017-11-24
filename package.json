@@ -1,6 +1,6 @@
 {
   "name": "gulp-eagle",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Gulp Eagle is based on Laravel Elixir, which provides a clean, fluent API for defining basic Gulp tasks.",
   "main": "src/index.js",
   "scripts": {
